@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: url('../../assets/fonts/bold/EricssonHilda-Bold.eot');
+  src: url('../../assets/fonts/bold/EricssonHilda-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../../assets/fonts/bold/EricssonHilda-Bold.woff2') format('woff2'),
+    url('../../assets/fonts/bold/EricssonHilda-Bold.woff') format('woff'),
+    url('../../assets/fonts/bold/EricssonHilda-Bold.ttf') format('truetype'),
+    url('../../assets/fonts/bold/EricssonHilda-Bold.svg#EricssonHilda-Bold') format('svg');
+  font-weight: bold;
+  font-style: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: url('../../assets/fonts/regular/EricssonHilda-Regular.eot');
+  src: url('../../assets/fonts/regular/EricssonHilda-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../../assets/fonts/regular/EricssonHilda-Regular.woff2') format('woff2'),
+    url('../../assets/fonts/regular/EricssonHilda-Regular.woff') format('woff'),
+    url('../../assets/fonts/regular/EricssonHilda-Regular.ttf') format('truetype'),
+    url('../../assets/fonts/regular/EricssonHilda-Regular.svg#EricssonHilda-Regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: url('../../assets/fonts/medium/EricssonHilda-Medium.eot');
+  src: url('../../assets/fonts/medium/EricssonHilda-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../../assets/fonts/medium/EricssonHilda-Medium.woff2') format('woff2'),
+    url('../../assets/fonts/medium/EricssonHilda-Medium.woff') format('woff'),
+    url('../../assets/fonts/medium/EricssonHilda-Medium.ttf') format('truetype'),
+    url('../../assets/fonts/medium/EricssonHilda-Medium.svg#EricssonHilda-Medium') format('svg');
+  font-weight: 500;
+  font-style: medium;
+  font-display: swap;
+}

@@ -1,0 +1,55 @@
+@import '@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+
+$required-color: var(--dnr-required-asterisk-color, $base-color-blue);
+
+.reconcile-job {
+  font-family: var(--font-main, 'Ericsson Hilda');
+
+  &__header {
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  &__form_group{
+    font-size: 14px;
+    padding-bottom: 16px;
+  }
+
+  &__action-buttons-holder {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__reconcile-button {
+    padding-left: 1em;
+  }
+
+  &__cross-close-icon {
+    cursor: pointer;
+    float: right;
+    z-index: 1000;
+  }
+
+  .required {
+    color: $required-color;
+  }
+}
+
+:host ::ng-deep {
+  .dynamic-inputs-display {
+    overflow-x:hidden;
+    overflow-y:auto;
+    max-height:500px;
+  }
+
+  form .row {
+    width: 95%;
+}
+}

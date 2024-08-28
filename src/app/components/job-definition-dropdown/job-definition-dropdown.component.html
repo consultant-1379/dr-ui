@@ -1,0 +1,18 @@
+<div class="job-definition">
+
+  <div class="job-definition-label">
+    {{'createJob.JOB_DEFINITION' | translate}}
+    <small *ngIf="required" class="required"> *</small>
+  </div>
+
+  <erad-dropdown class="job-definition-dropdown"
+      [viewStyle]="viewStyle"
+      [loading]="jobDefinitionsLoading"
+      [options]="jobDefinitionOptions"
+      [optionSelected]="appJobNameSelected"
+      title={{appJobNameSelected?.description}}
+      [isDisabled]="!featurePackId || !applicationId"
+      (changed)="onSelectionChange($event)"
+      eradKeyboardSupport>
+  </erad-dropdown>
+</div>

@@ -1,0 +1,62 @@
+<mat-dialog-container class="reconcile-job">
+
+  <eui-icon class="reconcile-job__cross-close-icon" name="cross" (click)="closeDialog()"></eui-icon>
+
+  <div *ngIf="loading; then loadingMsgDiv; else reconcileDiv"></div>
+  <ng-template #loadingMsgDiv>
+    <dnr-info-message
+      [showTopIcon]="true"
+      [title]="'INFORMATION'"
+      [message]="'PLEASE_WAIT_MESSAGE'"
+      [topIconSize]="topIconSize"
+    ></dnr-info-message>
+  </ng-template>
+
+  <ng-template #reconcileDiv>
+    <div class="reconcile-job__header">
+      {{ "reconcileJob.RECONCILIATION_INPUTS" | translate }}
+    </div>
+    <div class="reconcile-job__subtitle">
+      <div *ngIf="reconcileInputs?.length > 0">
+        {{"reconcileJob.RECONCILE_SUBTITLE" | translate }}
+      </div>
+      <div *ngIf="!reconcileInputs">
+        {{"reconcileJob.RECONCILE_SUBTITLE_NO_INPUTS" | translate }}
+      </div>
+      <div *ngIf="selectedItems.length > 0; then reconcileMsg; else reconcileAllMsg"></div>
+
+      <ng-template #reconcileMsg>
+        <div>{{"reconcileJob.RECONCILING_COUNT" | translate: { itemsCount: selectedItems.length} }}</div>
+      </ng-template>
+
+      <ng-template #reconcileAllMsg>
+        <div>{{"reconcileJob.RECONCILING_ALL_COUNT" | translate: { itemsCount: itemsCount} }}</div>
+      </ng-template>
+    </div>
+
+    <mat-dialog-content>
+      <!-- note possible there are no reconcile inputs in the application -->
+      <div class="reconcile-job__form_group" *ngIf="reconcileInputs?.length > 0">
+        <dnr-dynamic-inputs-display
+          [inputDataArray]="reconcileInputs">
+        </dnr-dynamic-inputs-display>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="reconcile-job__action-buttons-holder">
+      <erad-button
+          class="reconcile-job__cancel-button"
+          [label]="'buttons.CANCEL' | translate"
+          [mode]="buttonMode.Secondary"
+          (buttonClicked)="closeDialog()">
+        </erad-button>
+        <erad-button
+          class="reconcile-job__reconcile-button"
+          id="reconcile-job-submit-button-id"
+          [label]="'buttons.RECONCILE' | translate"
+          [disabled]="shouldDisableButton()"
+          [mode]="buttonMode.Primary"
+          (buttonClicked)="reconcileJob()">
+        </erad-button>
+      </mat-dialog-actions>
+    </ng-template>
+</mat-dialog-container>

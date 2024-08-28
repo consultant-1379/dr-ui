@@ -1,0 +1,180 @@
+##  File for "REST client" Visual studio code extension.
+##  Add a ### between URls and press "Send Request" to test response.
+##  Note: mock server needed to be up.
+
+
+###  Get all feature packs
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs
+
+### Get sorted feature packs
+GET `http://localhost:${{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?sort=+name`
+
+### Get sorted feature packs with offset and limit
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?sort=+name&offset=0&limit=5
+
+###   Get sorted (desc) feature packs with offset and limit
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?sort=-name&offset=0&limit=8
+
+### Get sorted feature packs with offset and limit and filter (name contains 22)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?sort=-name&offset=0&limit=5&filters=name==*22*
+
+###  Get specific feature pack (fixed id for one of the feature-packs has id as below);
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/1
+
+### Get applications for specific feature pack
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/1/applications
+
+### Get input-configurations for specific feature pack
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/1/input-configurations
+
+
+### Get mulitple filtered feature packs (contains filter)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?filters=name==*2*
+
+### Get mulitple filtered feature packs
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?filters=id==61*;description==*feature*;createdAt==2023*
+
+### Get filtered feature packs (starts with filter)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs?filters=name==2*
+
+
+### Feature pack upload (real server would be for passing a file - i.e. Content-Type: multipart/form-data)
+PUT http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/b59bd307-8577-41ee-99f4-fff3f0cfa6ca HTTP/1.1
+content-type: application/json
+
+{
+  "decription": "feature pack creation description",
+  "file": "@design_and_reconciliation_proposed_27_02.yaml"
+
+}
+
+
+###  Create Feature pack. Note need bodyParser in use in Server.js for payload to get through
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs HTTP/1.1
+content-type: application/json
+
+{
+  "name": "feature pack created",
+  "description": "feature pack creation description",
+  "file": "@design_and_reconciliation_proposed_27_02.yaml"
+}
+
+### Get specific application
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/691fd10c-ff9b-11ed-be56-0242ac120002/applications/hello
+
+
+### Get specific input-configuration
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/691fd10c-ff9b-11ed-be56-0242ac120002/input-configurations/12
+
+
+### delete feature pack
+DELETE http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/691fd10c-ff9b-11ed-be56-0242ac120002
+
+### should fail with errorCode / errorMessage
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/feature-packs/691fd10c-ff9b-11ed-be56-0242ac120002
+
+
+###  Jobs API (get all jobs)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs
+
+### get specific job
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345
+
+
+### Get discovered objects
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345/discovered-objects
+
+### Reconcile on ALL discovered objects
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345/discovered-objects/reconciliations HTTP/1.1
+content-type: application/json
+
+{
+  "name": "my_reconcile",
+  "description": "my description",
+  "inputs": {
+    "input_1": "value_1"
+  }
+}
+
+### Reconcile on ALL discovered objects
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345/reconciliations HTTP/1.1
+content-type: application/json
+
+{
+  "name": "my_reconcile",
+  "description": "my description",
+  "inputs": {
+    "input_1": "value_1"
+  }
+}
+
+### Reconcile on ALL (bad request)
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345/reconciliations HTTP/1.1
+content-type: application/json
+
+{
+  "name": "bad_reconcile",
+  "description": "my description"
+}
+
+
+### delete job
+DELETE http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345
+
+### delete jobs (filter based)
+DELETE http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs?filters=jobScheduleId==2
+
+### duplicate job
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/jobs/12345/duplicate HTTP/1.1
+content-type: application/json
+
+{
+  "jobId": "42"
+}
+
+
+################  Job scheduling API ####################
+
+
+### get all job schedules  (run this first as creates mock server data)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules
+
+
+### Disable one job schedule (change to an id from get all)POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules HTTP/1.1
+PATCH http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules/2 HTTP/1.1
+content-type: application/json
+
+{
+  "enabled": "false"
+}
+
+
+### get one job schedule (change to an id from get all)
+GET http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules/2
+
+
+### Enable one job schedule (change to an id from get all)POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules HTTP/1.1
+PATCH http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules/2 HTTP/1.1
+content-type: application/json
+
+{
+  "enabled": "true"
+}
+
+
+###  Create job schedule
+POST http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules HTTP/1.1
+content-type: application/json
+
+{
+  "name": "my job schedule2",
+  "description": "schedule creation description",
+  "expression": "0 2 * * *",
+  "jobSpecification" : {
+
+  }
+
+}
+
+### Delete one job schedule (change to an id from get all)
+DELETE http://localhost:{{$dotenv port}}/discovery-and-reconciliation/v1/job-schedules/41

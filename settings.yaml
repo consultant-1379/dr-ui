@@ -1,0 +1,72 @@
+modelVersion: 2.0
+description: "Ericsson DnR-UI Settings"
+properties:
+  #
+  # Image versions
+  #
+  - adp-checkers-tag: "latest"
+  - adp-helm-dr-check-tag: "latest"
+  - adp-image-dr-check-tag: "latest"
+  - battery-toolbox-image: armdocker.rnd.ericsson.se/proj-cat-drop/battery-toolbox:latest
+  - bss-helm-dr-check-tag: "latest"
+  - hadolint-scan-tag: "latest"
+
+  #
+  # Product/repo config
+  #
+  - arm-docs-dev-repo: "proj-dnr-docs-dev-generic-local"
+  - common-base-repo-version: 6.2.0-13
+  - deliverables-arm-release-repo: "proj-dnr-release-local"
+  - deliverables-arm-staging-path: "proj-dnr-release-local/deliverables/${var.image-version}/"
+  - directory-of-dockerfile: .
+  - docker-image-name: dr-ui
+  - docker-project-drop: proj-dnr-drop
+  - docker-project-release: proj-dnr-released
+  - execute-generate-toolbox-documentation: false
+  - execute-validate-toolbox-settings: false
+  - fail-on-validate-toolbox-conventions: false
+  - fullpath-to-dockerfile: docker/Dockerfile
+  - git-head-variable: ".bob/var.maven-auto-stepping-not-applicable"
+  - git-repo-url: "https://gerrit-gamma.gic.ericsson.se/#/admin/projects/ESOA/DR-Parent/com.ericsson.bos.dr/dr-ui"
+  - git-submodule-batteries-name: batteries
+  - global-docker-path: proj-dnr-released-docker-global
+  - helm-chart-module-name: charts/dr-ui
+  - helm-chart-name: dr-ui
+  - helm-project-drop: "proj-dnr-drop-local"
+  - helm-project-release: "proj-dnr-released-local"
+  - version-increment-policy: PATCH
+
+  #
+  # Linting and analysis
+  #
+  - adp-design-rule-flags: ""
+  - bss-design-rule-flags: ""
+  - fail-on-snapshot-found: false
+  - fullpath-to-hadolint-customconfig-yaml: ci/config/hadolint/custom_config.yaml
+  - ignore-snapshot-files: ""
+  - image-design-rule-flags: ""
+  - sonarqube-server: "https://codeanalyzer2.internal.ericsson.com"
+  - quality-test-exit-on-evaluate-resultcodes: false
+  - verify-design-rules-central-data-tag: latest
+
+  #
+  # VA
+  #
+  - security-master-gerrit-reviewer: "dnr Vulnerability Impact Team"
+  - va-anchore-tpg: dnr
+  - va-arm-dev-repo: proj-dnr-va-dev-generic-local
+  - va-path-to-vulnerability-report-config: "ci/config/Vulnerability_Report.config"
+  - va-report-exit-on-evaluate-resultcodes: False
+  - va-report-generate-experimental-va-report: False
+  - va-report-generate-adp-va-report-for-va-hub: False
+  - va-test-wiki-containerization-vulnerability-impact: "https://eteamspace.internal.ericsson.com/display/BSSDO/Vulnerability-Analysis+via+service-va-test"
+  - va-xrayscan-docker-drop-project: docker-v2-global-proj-dnr-xray-local
+  - va-xrayscan-docker-released-project: docker-v2-global-proj-dnr-xray-local
+
+env:
+  - DOCKER_PROJECT (default=proj-dnr-dev)
+  - HELM_DROP_REPOSITORY (default=https://arm.seli.gic.ericsson.se/artifactory/proj-dnr-drop-helm)
+  - HELM_RELEASED_REPOSITORY (default=https://arm.seli.gic.ericsson.se/artifactory/proj-dnr-released-helm)
+  - HELM_REPOSITORY (default=https://arm.seli.gic.ericsson.se/artifactory/proj-dnr-dev-helm)
+var:
+  - image-version

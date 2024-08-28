@@ -1,0 +1,18 @@
+<div class="create-job">
+  <div [eradLoader]="createJobLoading"></div>
+  <erad-layout>
+    <div header class="create-job__header">
+      <div class="create-job__title"> {{"createJob.TITLE" | translate }}</div>
+      <div class="create-job__subtitle"> {{"createJob.SUBTITLE_TWO_COLUMNS" | translate }}</div>
+    </div>
+    <div content class="create-job__content">
+      <dnr-create-job-information-form
+        [nextPagePath] ="nextPagePath"
+        [displayOrientation]="displayOrientation"
+        [preSelectedFeaturePackId]="preSelectedFeaturePackId"
+        [preSelectedApplicationId]="preSelectedApplicationId"
+        [configInputValues] = "configInputValues"
+      ></dnr-create-job-information-form>
+    </div>
+  </erad-layout>
+</div>

@@ -1,0 +1,135 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+$app-item-detail-view-content-background-color: var(--feature-layout-background);
+$app-item-detail-view-border-color: var(--app-item-detail-view-border-color,
+        $border-color-light);
+
+$app-item-detail-view-header-title-color: var(--app-item-detail-view-header-title-color, $base-color-black-08);
+$app-item-detail-view-header-title-font-size: var(--app-item-detail-view-header-title-font-size,
+        $text-large);
+$app-item-detail-view-header-subtitle-color: var(--app-item-detail-view-header-subtitle-color,
+        $base-color-dim-gray);
+
+$app-item-detail-view-left-panel-max-width: var(--app-item-detail-view-left-panel-max-width,
+        368px);
+
+
+:host ::ng-deep {
+    .header .expand-button .icon-search {
+        color: $base-color-black;
+    }
+
+    .content-main {
+        padding-right: 1px;
+        box-sizing: border-box;
+    }
+
+    .header {
+        .expand-button {
+            padding: 4px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .title {
+            padding-left: 4px;
+            color: $app-item-detail-view-header-title-color;
+            font-size: $app-item-detail-view-header-title-font-size;
+        }
+
+        .subtitle {
+            font-size: $text-regular;
+            padding-left: 4px;
+            color: $app-item-detail-view-header-subtitle-color;
+        }
+
+        .divider {
+            margin-left: 2px;
+            margin-right: 2px;
+            height: 16px;
+            width: 1px;
+            display: inline-block;
+            background-color: $app-item-detail-view-border-color;
+        }
+    }
+
+    .panel-content {
+        padding-top: 16px;
+    }
+
+    .job-not-exists-message {
+        margin-top: 16px;
+        font-size: $text-regular;
+        color: $app-item-detail-view-header-subtitle-color;
+    }
+
+    .no-data-main-panel-message {
+        padding: 24px;
+        font-size: $text-regular;
+        color: $app-item-detail-view-header-subtitle-color;
+    }
+
+    erad-content-layout {
+        .content-layout-wrapper {
+            .content-wrapper {
+                padding-left: 10px;
+                background-color: $app-item-detail-view-content-background-color;
+                overflow-y: auto !important;  // not scroll as default (shows in firefox)
+                height: auto !important;  // stops gray space at bottom of left panel when table height grows
+
+                &.left-border {
+                    min-height: 746px;
+                }
+
+                &.right-border {
+                    @extend .left-border;
+                }
+
+                &.main {
+                    min-height: 746px;
+                }
+                .title {
+                    color: $app-item-detail-view-header-title-color;
+                }
+            }
+        }
+
+        .content-wrapper:has(.content-right) {
+            max-width: $app-item-detail-view-left-panel-max-width;
+        }
+
+        .content-preview {
+            margin-top: 16px;
+        }
+
+        div[left-panel-icons] {
+            display: contents;
+        }
+    }
+}
+
+.job-detail-view-container {
+    margin: 0 2rem;  // same margins as feature pack details and home screen (and tab navigation component)
+}
+
+.objects-page-title {
+    position: relative;
+    right: 16px;
+}
+
+.general-info-page-title {
+    position: relative;
+    right: 8px;
+}
+
+.inputs-page-title {
+    position: relative;
+    right: 8px;
+}
+
+.main-wrapper {
+    padding: 10px 16px;
+}

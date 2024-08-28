@@ -1,0 +1,220 @@
+#
+# COPYRIGHT Ericsson 2024
+#
+#
+#
+# The copyright to the computer program(s) herein is the property of
+#
+# Ericsson Inc. The programs may be used and/or copied only with written
+#
+# permission from Ericsson Inc. or in accordance with the terms and
+#
+# conditions stipulated in the agreement/contract under which the
+#
+# program(s) have been supplied.
+#
+
+global:
+  registry:
+    imagePullPolicy: IfNotPresent
+    url: armdocker.rnd.ericsson.se
+  nodeSelector: {}
+  pullSecret: k8s-registry-secret
+  security:
+    tls:
+      enabled: false
+
+  hosts:
+    iam: "iam.ericsson.com"
+  iam:
+    clientId: "eo"
+    adminSecret: eric-sec-access-mgmt-creds
+    userKey: kcadminid
+    passwordKey: kcpasswd
+    cacert:
+      secretName: iam-cacert-secret
+      key: tls.crt
+      filePath: iam/ca.crt
+  db:
+    connection:
+      max-lifetime:
+  internalIPFamily:
+  serviceMesh:
+    enabled: true
+replicaCount: 1
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+annotations: {}
+
+labels: {}
+
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port:
+    http: 80
+    https: 443
+
+server:
+  port:
+    http: 8080
+    https: 8443
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  host: dr.ericsson.com
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  drUi:
+    requests:
+      memory: "1000M"
+      cpu: "100m"
+      ephemeral-storage:
+    limits:
+      memory: "1000M"
+      cpu: "1000m"
+      ephemeral-storage:
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+topologySpreadConstraints: [ ]
+
+affinity:
+  podAntiAffinity: "soft"
+  topologyKey: "kubernetes.io/hostname"
+
+imageCredentials:
+  repoPath: REPOPATH
+  # repoPath include the image path relative to the registry url, excluding image name
+  mainImage:
+    repoPath:
+    registry:
+      url:
+
+kafka:
+  bootstrapServers: eric-data-message-bus-kf:9092
+  bootstrapServersTls: eric-data-message-bus-kf:9093
+
+prometheus:
+  path: /actuator/prometheus
+  scrape: true
+
+probes:
+  drUi:
+    livenessProbe:
+      initialDelaySeconds: 300
+      periodSeconds: 5
+      timeoutSeconds: 10
+      failureThreshold: 12
+      tcpSocket:
+        port: 8080
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      tcpSocket:
+        port: 8080
+      timeoutSeconds: 2
+      failureThreshold: 3
+      successThreshold: 1
+
+jobs:
+  cleanup:
+    maxAgeHours: 24
+
+drUi:
+  resume:
+    enabled: "false"
+
+workflow:
+  job:
+    maxJobs: 3
+    waitTimeInMillis: 5000
+    maxWaitInMillis: 5000
+
+logging:
+  format:
+    json: false
+
+jvm:
+  heap:
+    min: "512m"
+    max: "750m"
+
+terminationGracePeriodSeconds: 30 # default
+
+podPriority:
+  drUi:
+    priorityClassName: ""
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 25%
+    maxSurge: 25%
+
+groupsClaim: "groups"       #May be overwritten at deployment tme
+
+security:
+  keystore:
+    keyStoreSecretName: eric-esoa-dr-ui-server-cert
+    tlsCertDirectory: /var/run/secrets/eric-esoa-dr-ui-server-cert/
+  truststore:
+    commonCa:
+      caCertSecretName: eric-bos-esoa-common-client-ca-secret
+      caCertDirectory: /var/run/secrets/eric-bos-esoa-common-client-ca-cert/
+    sipCa:
+      caCertSecretName: eric-sec-sip-tls-trusted-root-cert
+      caCertDirectory: /var/run/secrets/eric-sec-sip-tls-trusted-root-cert/
+    guiAggregator:
+      caCertSecretName: eric-adp-gui-aggregator-service-internal-ui-client-ca
+      caCertDirectory: /var/run/secrets/eric-adp-gui-aggregator-service-internal-ui-client-ca/
+    bundleCa:
+      caCertDirectory: /tmp/certs/
+
+# port: Needed for prometheus annotations in the eric-esoa-so-library-chart
+port:
+  http: 8080
+
+portal:
+  proxyValue: eric-esoa-dr-ui

@@ -1,0 +1,59 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+
+.jobs-apps {
+
+    .job-name, .start-date-label {
+        font-size: $text-medium-regular;
+        line-height: 1.5em;
+    }
+
+    .job-id, .start-date {
+        font-size: $text-regular;
+    }
+
+    &-list {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0;
+        color: var(--erad-base-color-black, #242424);
+
+        &-item {
+            cursor: pointer;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed var(--dnr-main-menu-left-panel-dash, var(--erad-base-color-dim-gray, #6a6a6a));
+
+            .content {
+                padding: 0 8px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                &.selected {
+                    border: 1px solid var(--dnr-list-view-table-id-color, #0069C2);
+                    margin-bottom: 6px;
+                    padding-top: 6px;
+                }
+
+                &:hover {
+                    background-color: var(--app-item-menu-header-subtitle-color, var(--erad-base-color-dim-gray, #DCDCDC));
+                }
+            }
+
+            .list-group {
+                &-area {
+                    padding: 4px 0;
+
+                    p {
+                        margin: 8px 0;
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-inline-error {
+        padding-top: 16px;
+    }
+}

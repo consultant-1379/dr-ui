@@ -1,0 +1,47 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+.search-filter-tabs {
+  display: flex;
+  align-items: center;
+  background-color: var(--feature-layout-background, "#FAFAFA");
+  box-sizing: border-box;
+  padding: 10px 16px 6px;
+  margin: 0 2rem;
+
+  .sf-tabs-arrow-panel {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .sf-tabs-navigation-group {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
+:host ::ng-deep {
+  erad-tabs {
+    .mat-tab-header {
+      padding: 0 0 2px;
+    }
+  }
+
+  // no need for a select blue color (no concept of a "selected" filter here)
+  .mat-tab-label-active,
+  .mat-tab-label {
+    background-color: var(--card-background, "#fff");
+    color: var(--app-text-color, #242424);
+    border: 1px solid;
+  }
+
+   /* if on kebab icon the right - its too far away if only few tabs (
+      and lost if in scroll situation when large number of tabs */
+  erad-action-list {
+    float: left;
+    position:relative;
+    top: 4px; /* align kebab to a < icon when scroll tabs */
+    right: 7px; /* flush with search left */
+  }
+}

@@ -1,0 +1,22 @@
+<mat-dialog-container class="failure-display-dialog-component">
+
+  <h2 *ngIf="failureData.titleKey">
+    {{ failureData.titleKey | translate }}
+  </h2>
+
+  <mat-dialog-content>
+    <dnr-failure-display
+        [failure]="failureData.failure">
+    </dnr-failure-display>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="failure-display-dialog-component__action-buttons-holder">
+    <erad-button
+        class="failure-display-dialog-component__ok-button"
+        [label]="'buttons.OK' | translate"
+        [mode]="buttonMode.Primary"
+        (buttonClicked)="onClose()">
+      </erad-button>
+  </mat-dialog-actions>
+
+</mat-dialog-container>

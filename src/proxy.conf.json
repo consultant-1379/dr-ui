@@ -1,0 +1,8 @@
+{
+  "/discovery-and-reconciliation": {
+    "target": "http://localhost:8081",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": false
+  }
+}

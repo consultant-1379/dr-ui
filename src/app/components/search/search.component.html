@@ -1,0 +1,12 @@
+<dnr-search-filter
+  [searchFields]="searchFields"
+  [placeholder]="placeholder"
+  [filter]="filter"
+  (quickSearch)="onQuickSearchClicked($event)"
+  (advanceSearch)="onAdvanceSearchClicked($event)"
+></dnr-search-filter>
+<dnr-search-filter-tabs
+  [filter]="filter"
+  (changeFilter)="onChangeFilter($event)"
+  (clearAllFilters)="onAdvanceSearchClicked([])"
+></dnr-search-filter-tabs>

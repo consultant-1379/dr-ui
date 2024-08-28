@@ -1,0 +1,50 @@
+<div class="entity-description" id="dnr-item-information-details">
+  <div>
+    <div class="entity-details">
+      <div class=copy-download-container>
+        <!-- Adding copy-download icons affecting:
+          - Feature pack details page - Right Job details flyout  (flyout 2) -
+          - Job details page - Left flyout Job details
+        -->
+        <dnr-copy-download
+          [copyObject] = "copyObject"
+          [downloadUrl] = "downloadURL"
+          [name]= "itemName"
+          [iconColor] = "copyDownloadIconColor"
+        ></dnr-copy-download>
+      </div>
+
+      <erad-collapsible-item
+        *ngFor="let item of selectableItems; let i = index; last as isLast"
+        [item]="item"
+        (navigationClicked)="onLaunchIconClicked(item)"
+        (expandClicked)="onAccordionHeaderClicked($event, item)"
+      >
+        <div content *ngIf="item.title === accordionItemTypes.GENERAL_INFORMATION" class="general-info-container">
+            <ng-content select="[GENERAL_INFORMATION]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.APPLICATIONS || item.title === accordionItemTypes.APPLICATION_DETAIL" class="application-container">
+            <ng-content select="[APPLICATIONS]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.INPUTS" class="objects-container">
+          <ng-content select="[INPUTS]"></ng-content>
+        </div>
+          <div content *ngIf="item.title === accordionItemTypes.OBJECTS" class="objects-container">
+            <ng-content select="[OBJECTS]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.RECENT_EXECUTIONS" class="objects-container">
+          <ng-content select="[RECENT_EXECUTIONS]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.RECONCILIATION_INPUT" class="objects-container">
+          <ng-content select="[RECONCILIATION_INPUT]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.ERROR_DETAIL" class="objects-container">
+          <ng-content select="[ERROR_DETAIL]"></ng-content>
+        </div>
+        <div content *ngIf="item.title === accordionItemTypes.FILTER_ACTION_DETAIL" class="objects-container">
+          <ng-content select="[FILTER_ACTION_DETAIL]"></ng-content>
+        </div>
+      </erad-collapsible-item>
+    </div>
+  </div>
+</div>

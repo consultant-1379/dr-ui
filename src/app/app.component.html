@@ -1,0 +1,101 @@
+<erad-app-switcher
+  [open]="showApps"
+  [showClose]="true"
+  [branding]="branding"
+  [brandingPath]="brandingPath"
+  (closeClicked)="onAppsCloseClicked()"
+  (logoutClicked)="onLogoutClicked()">
+<div class="dnr-ui-app-container" backdrop>
+  <erad-application-layout
+    [applicationName]="getAppName()"
+    [loading]="false"
+    [leftOpened]="(leftDrawerOpened$ | async)!"
+    [rightOpened]="rightDrawerOpened"
+    [branding]="branding"
+    (applicationNameClicked)="onApplicationNameClicked()">
+    <div actions class="dnr-ui-app-container__system-bar-actions">
+      <mat-icon
+        eradKeyboardSupport
+        (enterPressed)="onSystemBarEnterPressed('apps')"
+        role="button"
+        (click)="onAppsClicked()"
+        class="system-bar-action">
+        apps
+      </mat-icon>
+
+      <div
+        eradKeyboardSupport
+        (enterPressed)="onSystemBarEnterPressed('userProfile')"
+        class="system-bar-action user-profile"
+        (click)="onUserActionClicked()"
+      >
+        <eds-icon icon="profile" class="user-profile-icon"></eds-icon>
+        <span class="dnr-system-bar-user">{{ username$ | async }}</span>
+      </div>
+    </div>
+
+    <div  class="centered-container" *ngIf="!isAuthorized" content>
+      <div class="no-authority-message-holder">
+        <dnr-info-message
+          [title]="'NOT_AUTHORIZED_TITLE'"
+          [message]="'NOT_AUTHORIZED_MESSAGE'"
+          [iconName]="'cross'"
+          [showTopIcon]= "true"
+          [topIconName]="'econ'">
+        </dnr-info-message>
+      </div>
+    </div>
+
+
+    <div *ngIf ="isAuthorized"  content class="app-content-full">
+      <erad-toolbar>
+        <ng-container *ngIf="toolbarBreadcrumbData">
+          <erad-menu-toggle-container
+            class="dnr-ui-app-container__breadcrumb-menu-toggle-container"
+          ></erad-menu-toggle-container>
+          <erad-breadcrumb
+            class="dnr-ui-app-container__breadcrumb"
+            [breadcrumb]= "toolbarBreadcrumbData"
+            (breadcrumbClick) = "handleToolbarBreadcrumbClick($event)">
+          </erad-breadcrumb>
+        </ng-container>
+        <ng-container *ngIf="!toolbarBreadcrumbData">
+          <erad-menu-toggle-container></erad-menu-toggle-container>
+         <!-- No toolbar title required but if there were this would be the place  -->
+        </ng-container>
+
+      </erad-toolbar>
+
+      <dnr-tab-navigation
+        *ngIf="tabs?.length >= 1"
+        [id]="featurePackInfo?.name"
+        class="app-tab-navigation"
+        [tabs]="tabs"
+        [showAddSignIcon]="true"
+        [selectedIndex]="selectedTabIndex"
+        [contextActions]="[]"
+        (addSignClick)="onAddSignClick()"
+        (tabChange)="onTabChanged($event)"
+        (totalTabsOpened)="onTabClosed($event)"
+        (reachedMaxTabs)="onMaxTabs()"
+    ></dnr-tab-navigation>
+
+      <router-outlet></router-outlet>
+      <erad-notification-holder-v2></erad-notification-holder-v2>
+
+    </div>
+
+    <div right class="drawer-right">
+      <erad-user-profile
+        [username]="username$ | async | translate"
+        [versionLabel]="getVersion()"
+        [copyrightLabel]="getCopyright()"
+        [privacyPolicyLink]="getPrivacyPolicy()"
+        [termsOfServiceLink]="getTermsOfService()"
+        (closed)="onRightDrawerClose()"
+        (logoutClicked)="onLogoutClicked()"
+      ></erad-user-profile>
+    </div>
+  </erad-application-layout>
+</div>
+</erad-app-switcher>

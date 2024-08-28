@@ -1,0 +1,15 @@
+<div main-panel-content>
+    <div class="discovered-objects-container__table-holder">
+      <div class="discovered-objects-container__title">{{ title }}</div>
+      <dnr-discovered-objects-table #table
+        [job]="job"
+        [actionItems] ="actionItems"
+        [showRightContextMenu]="showButtons"
+        (reconcileClicked)="onReconcileClicked()"
+        (selectionChanged)="onSelectionChanged($event)"
+        (refreshClicked)="onRefreshClicked()"
+        (dataLoaded)="onDataLoaded($event)"
+      ></dnr-discovered-objects-table>
+    </div>
+    <div class="discovered-objects-container__pagination-holder"></div>
+</div>

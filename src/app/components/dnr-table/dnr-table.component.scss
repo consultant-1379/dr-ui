@@ -1,0 +1,55 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+// the css var can only be overridden with hex values, not with the color variables
+.dnr-table-container {
+  --menu-background: var(--feature-layout-background);
+
+  .loader-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+:host ::ng-deep {
+  eui-tile {
+    padding: 0;
+  }
+  eui-tile:focus-visible, eui-tile:focus {
+    outline: none;
+  }
+
+  eui-pagination {
+    outline: none;
+  }
+
+  eui-menu-item:hover {
+    color: #ffffff;
+  }
+}
+
+.table-failure, .table-no-data {
+  display: none;
+}
+
+.icon-alignment{
+  float:left;
+  cursor: pointer;
+  padding-right: 8px;  /* info icon before text for empty table message */
+}
+
+.empty-text{
+  line-height: 1.5em;
+}
+
+.failure-container, .empty-container {
+  /* left: 8px would align into same position as the table reload icon, but aligning search field */
+  position: relative;
+  top: 16px;
+  display: flex;
+  flex-direction: row;
+}

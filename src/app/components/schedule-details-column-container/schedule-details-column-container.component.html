@@ -1,0 +1,42 @@
+<span class="schedule-details-column-container">
+
+  <div *ngIf="loading || !!failure; then showNoData; else showData"></div>
+
+  <ng-template #showNoData>
+    <div *ngIf="!!failure; then showFailure; else showLoading"></div>
+
+    <ng-template #showFailure>
+      <dnr-failure-display
+        ERROR_DETAIL
+        [failure] = "failure">
+      </dnr-failure-display>
+    </ng-template>
+
+    <ng-template #showLoading>
+      <erad-loader-animation class="loader-wrapper"></erad-loader-animation>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #showData>
+    <dnr-item-information-details
+      [copyObject]="jobSchedule"
+      [itemName]="jobSchedule?.name || ''"
+      [selectableItems]="selectableItems"
+    >
+      <dnr-schedule-detail-column-view
+        [schedule]="jobSchedule"
+        GENERAL_INFORMATION
+      ></dnr-schedule-detail-column-view>
+      <dnr-job-inputs
+        INPUTS
+        [job]="jobSchedule?.jobSpecification"
+      ></dnr-job-inputs>
+      <dnr-jobs-list-column-view
+        RECENT_EXECUTIONS
+        (jobSelection)="onJobSelection($event)"
+        [jobScheduleId]="jobSchedule?.id"
+      ></dnr-jobs-list-column-view>
+    </dnr-item-information-details>
+
+  </ng-template>
+</span>

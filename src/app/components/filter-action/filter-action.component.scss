@@ -1,0 +1,51 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+#dnr-filter-action-detail {
+
+  margin-bottom: 5px;
+  margin-right: 1px;
+  box-sizing: border-box;
+  border-bottom: 1px dashed var(--dnr-main-menu-left-panel-dash, var(--erad-base-color-dim-gray, #6a6a6a));
+  padding: 0 8px;
+
+  &:hover {
+    border: 1px solid var(--dnr-list-view-table-id-color, #0069C2);
+  }
+
+  .small {
+    font-size: $text-medium-regular;
+    margin: 0;
+    line-height: 1.5em;
+    color: var(--erad-base-color-dim-gray, #6a6a6a);
+  }
+  .medium {
+    font-size: $text-regular;
+    color: var(--erad-base-color-black, #242424);
+    line-height: 1.5em;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .general-info {
+    margin: 10px 0;
+    .icon {
+      margin-right: 8px;
+    }
+  }
+
+  .description {
+    font-size: $text-regular;
+    padding: 7px 0;
+    line-height: 1.5em;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+

@@ -1,0 +1,19 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+$required-color: var(--dnr-required-asterisk-color, $base-color-blue);
+
+.required {
+  color: $required-color;
+}
+
+.job-definition-label {
+  padding: 8px 0;
+  font-size: $text-regular;
+  color: var(--erad-base-color-black, #242424);
+}
+
+:host ::ng-deep {
+  erad-dropdown .erad-bordered-dropdown {
+      border-radius: 3px;
+  }
+}

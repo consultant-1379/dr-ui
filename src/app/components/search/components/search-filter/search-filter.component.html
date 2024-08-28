@@ -1,0 +1,13 @@
+<erad-search-bar #searchBar
+  class="entity-search-bar"
+  [advancedSearchTypeAhead]="isAdvanceSearch"
+  [advanceSearch]="isAdvanceSearch"
+  [placeholder]="placeholder"
+  [cancelLabel]="'buttons.CANCEL' | translate"
+  [searchLabel]="'buttons.SEARCH' | translate"
+  [advanceSearchFormField]="searchFields"
+  [viewStyle]="viewStyle"
+  [value]="quickSearchValue"
+  (searched)="onSearchClicked($event)"
+  (advanceSearched)="onAdvanceSearchClicked($event)">
+</erad-search-bar>

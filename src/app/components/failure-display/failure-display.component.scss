@@ -1,0 +1,21 @@
+.failure-display{
+  font-family: var(--font-main, 'Ericsson Hilda');
+  font-size: 14px;
+
+  &__error-code-title{
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  &__error-code-message{
+    text-align: left;
+    word-wrap: break-word;
+    position: relative;
+    left: 19px;    // align with icon on next to error code
+    top: 8px;
+
+    &-no-error-code{
+      position: static
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<div class="applications-card-view"
+ id="dnr-applications-card-view"
+ *ngFor="let application of applications; let i = index; last as isLast">
+  <erad-card
+   (click)="onCardClicked(i)"
+   (enterPressed)="onCardClicked(i)"
+   [ngClass]="[ selected && selected[i] ? 'card-list-item-selected': '']"
+   [statusBadgeColor]=statusBadgeColor>
+    <div [ngClass]="'content'">
+      <div class="medium">{{application.name}}</div>
+      <div class="small">{{ "job.APPLICATION_ID" | translate}}</div>
+      <div class="medium">{{application.id}}</div>
+
+      <ng-container *ngIf="application.description">
+        <div class="small">{{ "job.DESCRIPTION" | translate}}</div>
+        <div class="medium">{{application.description}}</div>
+      </ng-container>
+    </div>
+  </erad-card>
+</div>

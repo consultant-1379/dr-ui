@@ -1,0 +1,13 @@
+<div *ngIf="itemsCount > 0" class="table-subtitle" >
+  <span>{{ countText }}</span>
+  <span *ngIf="selectionText">
+    <span>{{ selectionText }} | </span>
+    <span
+    class="table-subtitle__clear"
+    (click)="onClearClick()"
+    [ngStyle]="{'color': '#1174E6', 'padding-bottom':'1px', 'border-bottom': clearBorder, 'cursor': 'pointer'}"
+    (mouseover)="onMouseOverClear()"
+    (mouseout)="onMouseOutClear()">
+    {{ 'table.CLEAR' | translate }}</span>
+  </span>
+</div>

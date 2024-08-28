@@ -1,0 +1,73 @@
+@import '@erad/assets/styles/typography';
+@import '@erad/assets/styles/colors';
+
+$card-border-color-selected: var(--dnr-ui-characteristic-card-border-color, $base-color-cyan-blue-dark);
+$card-title-color: var(--dnr-ui-characteristic-card-title-color, $base-color-black);
+$card-default-text-color: var(--dnr-ui-characteristic-card-default-text-color, $base-color-dim-gray);
+$card-default-value-color: var(--dnr-ui-characteristic-card-default-value-color, $base-color-dark-black);
+$card-select-text-color: var(--dnr-ui-characteristic-card-select-text-color, $base-color-dim-gray);
+$card-border-color-light: var(--dnr-ui-characteristic-card-border-color-light, $border-color-light);
+$card-boolean-text-color: var(--dnr-ui-characteristic-card-boolean-text-color, $base-color-dark-black);
+
+.applications-card-view {
+  margin-left: 10px;
+
+  erad-card {
+    width: 300px;
+    height: 200px;  // won't be many applications (at least allow for a 3 line description to have no scroll)
+    border: 1px solid $card-border-color-light;
+    display: flex;
+  }
+
+  .card-list-item-selected {
+    border: 1px solid $card-border-color-selected;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0;
+  }
+
+  .default-text {
+    color: $card-default-text-color;
+    font-size: $text-medium-regular;
+  }
+
+  .default-value {
+    color: $card-default-value-color;
+    font-size: $text-medium-regular;
+  }
+
+  .content {
+    width: 100%;
+    text-align: left;
+    padding-top: 10px;
+    margin-left: 10px;
+    line-height: 1.5em;
+    overflow-y: auto;
+  }
+
+  .small {
+    font-size: $text-medium-regular;
+    margin: 0;
+    line-height: 1.5em;
+    font-weight: 100;
+  }
+  .medium {
+    font-size: $text-regular;
+    margin-bottom: 10px;
+  }
+
+  .select-text {
+    font-size: $text-medium-regular;
+    color: $card-select-text-color;
+  }
+
+  .no-value-text {
+    font-size: $text-regular;
+  }
+
+  .value-type-title {
+    font-size: $text-regular;
+    color: $card-default-text-color;
+  }
+}

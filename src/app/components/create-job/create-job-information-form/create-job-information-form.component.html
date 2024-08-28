@@ -1,0 +1,169 @@
+<ng-container>
+    <section class="form" [ngClass]="{'sidePanel': displayOrientation === verticalLayout}">
+      <span class="reconcile-select">
+        <erad-selection
+            [selected]="false"
+            [preventChange]="false"
+            [stopPropagation]="false"
+            (selectionChanged)="autoReconcileHandler($event)">
+          </erad-selection>
+          <span class="reconcile-text">{{'reconcileJob.AUTO_RECONCILE' | translate}}</span>
+          <eui-icon aria-label="info" name="info" matTooltip="{{'reconcileJob.CREATE_JOB_RECONCILE_TOOLTIP' | translate}}"></eui-icon>
+        </span>
+
+        <div class="static_inputs_article container">
+            <div class="row">
+                <div class="form-group">
+                    <label class="form-group-label">
+                        {{'createJob.NAME' | translate}}<small class="required"> *</small>
+                    </label>
+                    <erad-text-input
+                        id="job-name"
+                        eradKeyboardSupport
+                        ngDefaultControl
+                        label="{{'ENTER_VALUE' | translate}}"
+                        value={{jobNameValue}}
+                        (change)="onNameChangedText($event)"
+                        [pattern]="safeStringPattern"
+                        [maxLength]="maxShortCharLength"
+                        [required]="true"
+                        [viewStyle]="viewStyle"
+                        [validationErrorMessage]="jobNameValue?.length === 0 ? ('INVALID_EMPTY_INPUT' | translate) : ('INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars})">
+                    </erad-text-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">{{'createJob.DESCRIPTION' | translate}}</label>
+                    <erad-text-input
+                        id="job-description"
+                        eradKeyboardSupport
+                        ngDefaultControl
+                        label="{{'ENTER_VALUE' | translate}}"
+                        value={{jobDescriptionValue}}
+                        [multiline]="true"
+                        (change)="onDescriptionChangedText($event)"
+                        [maxLength]="maxLargeCharLength"
+                        [viewStyle]="viewStyle">
+                    </erad-text-input>
+                    <div *ngIf="!isDescriptionFieldValid" class="invalid-input-message">
+                        {{ 'INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars} }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="form-group-label">
+                        {{'createJob.FEATURE_PACK_NAME' | translate}}<small class="required"> *</small>
+                    </label>
+                    <label class="form-group-value"
+                      *ngIf="preSelectedFeaturePackId">
+                        {{ featurePackSelected?.label }}
+                    </label>
+                    <erad-dropdown
+                        *ngIf="!preSelectedFeaturePackId"
+                        id="fp-name-dropdown"
+                        class="form-group-dropdown"
+                        [viewStyle]="viewStyle"
+                        [loading]="featurePacksLoading"
+                        [options]="featurePackOptions"
+                        [optionSelected]="featurePackSelected || selectDropDownPlaceholder"
+                        title={{featurePackSelected?.description}}
+                        (changed)="onFeaturePackOptionChange($event)"
+                        eradKeyboardSupport>
+                    </erad-dropdown>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">
+                        {{'createJob.APPLICATION_NAME' | translate}}<small class="required"> *</small>
+                    </label>
+                    <label class="form-group-value"
+                      *ngIf="preSelectedFeaturePackId">
+                        {{ applicationSelected?.label }}
+                    </label>
+                    <erad-dropdown
+                        *ngIf="!preSelectedFeaturePackId"
+                        id="fp-app-dropdown"
+                        class="form-group-dropdown"
+                        [viewStyle]="viewStyle"
+                        [loading]="applicationsLoading"
+                        [options]="applicationOptions"
+                        [optionSelected]="applicationSelected"
+                        title={{applicationSelected?.description}}
+                        [isDisabled]="!featurePackSelected"
+                        (changed)="onApplicationsOptionChange($event)"
+                        eradKeyboardSupport>
+                    </erad-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="dynamic_article container">
+            <!-- Discovery inputs -->
+            <div class="heading"> {{"createJob.JOB_INFORMATION" | translate }}</div>
+            <div class="row">
+                <div class="form-group">
+                    <dnr-job-definition-dropdown
+                        id="fp-job-dropdown"
+                        [required]="true"
+                        [featurePackId]="featurePackSelected?.value"
+                        [applicationId]="applicationSelected?.value"
+                        (discoverInputsChange)="onJobDefinitionsChange($event)">
+                    </dnr-job-definition-dropdown>
+                </div>
+                <div class="form-group" *ngIf="this.inputConfigOptions?.length > 0">
+                    <!-- just used to pre-populate inputs if desired (need not be required) -->
+                    <label class="form-group-label">
+                        {{'createJob.INPUT_CONFIGURATION' | translate}}
+                    </label>
+                    <erad-dropdown
+                        id="fp-input-config-dropdown"
+                        class="form-group-dropdown"
+                        [viewStyle]="viewStyle"
+                        [loading]="inputConfigLoading"
+                        [options]="inputConfigOptions"
+                        [optionSelected]="inputConfigSelected"
+                        title={{inputConfigSelected?.description}}
+                        [isDisabled]="!applicationSelected || !featurePackSelected || !appJobNameSelected"
+                        (changed)="onInputConfigChange($event)"
+                        eradKeyboardSupport>
+                    </erad-dropdown>
+                </div>
+            </div>  <!-- End of static inputs section  -->
+            <dnr-dynamic-inputs-display #discoveryInputs
+                [inputDataArray]="appDiscoverInputs"
+                [displayOrientation]="displayOrientation"
+                [preloadedValues]="configInputValues">
+            </dnr-dynamic-inputs-display>
+        </div> <!-- End of discovery dynamic inputs section  -->
+        <div *ngIf="autoReconcile && appJobNameSelected?.value != null" class="dynamic_article container">
+          <!-- Reconcile inputs -->
+          <div class="heading">{{"reconcileJob.RECONCILIATION_INPUTS" | translate }}</div>
+          <div *ngIf="appReconcileInputs.length > 0 then showReconcileInputs; else showNoReconcileInputs"></div>
+          <ng-template #showReconcileInputs>
+            <dnr-dynamic-inputs-display #reconcileInputs
+                [inputDataArray]="appReconcileInputs"
+                [displayOrientation]="displayOrientation">
+            </dnr-dynamic-inputs-display>
+          </ng-template>
+          <ng-template #showNoReconcileInputs>
+            <div> {{"reconcileJob.CREATE_JOB_NO_RECONCILE_INPUTS" | translate }}</div>
+          </ng-template>
+        </div> <!-- End of reconcile dynamic inputs section  -->
+        <div *ngIf="!hideCancelCreateButtons" footer class="container">
+            <div class="row footer">
+                <erad-button
+                    class="cancel-button"
+                    [label]="'buttons.CANCEL' | translate"
+                    [mode]="buttonMode.Secondary"
+                    (buttonClicked)="onCancel()">
+                </erad-button>
+                <erad-button
+                    class="create-button"
+                    id="create-job-button-submit-id"
+                    [label]="'buttons.CREATE' | translate"
+                    [mode]="buttonMode.Primary"
+                    [disabled]="shouldDisableButton()"
+                    (buttonClicked)="onCreate()">
+                </erad-button>
+            </div>
+          </div>
+    </section>
+</ng-container>

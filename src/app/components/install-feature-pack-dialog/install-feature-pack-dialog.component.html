@@ -1,0 +1,118 @@
+<mat-dialog-container class="install-feature-pack">
+
+  <eui-icon class="install-feature-pack__cross-close-icon" name="cross" (click)="closeDialog()"></eui-icon>
+
+    <h2 *ngIf="!featurePackId">
+      {{ "INSTALL_FEATURE_PACK_HEADER" | translate }}
+    </h2>
+    <ng-container *ngIf="featurePackId">
+      <h2>
+        {{ "UPDATE_FEATURE_PACK_HEADER" | translate }}
+      </h2>
+      <p>{{ "FEATURE_PACK_WARNING_MESSAGE" | translate }}</p>
+    </ng-container>
+
+    <mat-dialog-content>
+      <div class="install-feature-pack__form_group">
+          <label class="install-feature-pack__label">{{'NAME' | translate}}
+            <small *ngIf="!featurePackId" class="required"> *</small>
+          </label>
+          <erad-text-input *ngIf="!featurePackId"
+                eradKeyboardSupport
+                id="fp-name"
+                [value]="featurePackName"
+                [pattern]= SAFE_STRING_PATTERN
+                [validationErrorMessage]="validationErrorMessage"
+                [required]="true"
+                (changed)="onNameChange($event)"
+                [maxLength]= MAX_NAME_LENGTH
+                [viewStyle]="viewStyle"
+                [multiline]="false"
+          ></erad-text-input>
+
+            <!-- For some reason [pattern] and [validationErrorMessage]
+          are not working in erad-text-input component above (so using below)-->
+          <div  *ngIf="isInValidName || featurePackName?.length === 0"
+            class="install-feature-pack__invalid-input-message">
+                <ng-container *ngIf="featurePackName?.length === 0">
+                  {{ 'INVALID_EMPTY_INPUT' | translate }}
+                </ng-container>
+                <ng-container *ngIf="isInValidName">
+                  {{ 'INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars} }}
+                </ng-container>
+          </div>
+
+          <div *ngIf= "!!featurePackId" class="install-feature-pack__disabled-text" >
+            {{featurePackName}}
+          </div>
+      </div>
+
+      <div class="install-feature-pack__form_group">
+          <label class="install-feature-pack__label">{{'DESCRIPTION' | translate}}</label>
+          <erad-text-input
+                eradKeyboardSupport
+                id="fp-description"
+                [value]="descriptionValue"
+                [isDisabled]= "isLoading"
+                [placeholder]="'DESCRIPTION' | translate"
+                [required]="false"
+                (changed)="onDescriptionChange($event)"
+                [maxLength]= MAX_DESCRIPTION_LENGTH
+                [viewStyle]="viewStyle"
+                [multiline]="true"
+          ></erad-text-input>
+          <!-- For some reason [pattern] and [validationErrorMessage]
+          are not working in erad-text-input component above (so using below)-->
+          <div *ngIf="isInValidDescription"
+            class="install-feature-pack__invalid-input-message">
+            {{ 'INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars} }}
+          </div>
+       </div>
+
+       <div class="install-feature-pack__form_group">
+        <!-- server require both POST and PUT to contain a file so always required  -->
+          <label class="install-feature-pack__label">{{'fileUpload.UPLOAD_FILE' | translate}}
+            <small class="required"> *</small>
+          </label>
+          <div class="install-feature-pack__drop-area-holder">
+            <erad-file-upload
+              eradKeyboardSupport
+              id="fp-file"
+              [errorMessage]="errorMessageForFileUploader"
+              [required]="true"
+              [isProcessing]= "isLoading && !existingFileName"
+              [uploadText]="'fileUpload.UPLOAD_TEXT' | translate"
+              [uploadHighlightedText]="'fileUpload.UPLOAD_HIGHLIGHTED_TEXT' | translate"
+              [processingText]="'fileUpload.PROCESSING_TEXT' | translate"
+              (changeFiles)="onFileChange($event)"
+              (removeFile)="onRemoveFile()"
+            >
+            </erad-file-upload>
+        </div>
+       </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="install-feature-pack__action-buttons-holder">
+      <erad-button
+          class="install-feature-pack__cancel-button"
+          [label]="'buttons.CANCEL' | translate"
+          [mode]="buttonMode.Secondary"
+          (buttonClicked)="onCancel()">
+        </erad-button>
+        <erad-button *ngIf="!featurePackId"
+          class="install-feature-pack__submit-action-button"
+          id="install-fp-submit-button-id"
+          [label]="'buttons.INSTALL' | translate"
+          [disabled]="shouldDisableButton()"
+          [mode]="buttonMode.Primary"
+          (buttonClicked)="onSubmitFileToUpload()">
+        </erad-button>
+        <erad-button *ngIf="featurePackId"
+          class="install-feature-pack__submit-action-button"
+          id="update-fp-submit-button"
+          [label]="'buttons.UPDATE' | translate"
+          [disabled]="shouldDisableButton()"
+          [mode]="buttonMode.Primary"
+          (buttonClicked)="onSubmitFileToUpload()">
+        </erad-button>
+    </mat-dialog-actions>
+</mat-dialog-container>

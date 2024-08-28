@@ -1,0 +1,14 @@
+<div class="info-message-container" [ngClass]="{ 'icon': showTopIcon }">
+  <eui-icon [name]="topIconName" [size]="topIconSize" *ngIf="showTopIcon"></eui-icon>
+  <div class="container-fluid">
+    <ng-content select="[title-header]"></ng-content>
+    <div class="d-flex label-group" *ngIf="title">
+      <eui-icon [name]="titleIconName" [size]="titleIconSize"></eui-icon>
+      <label>{{title | translate}}</label>
+    </div>
+
+    <p [ngClass]="{ 'message-only': !showTopIcon && !title, 'message-as-subtitle': !showTopIcon && !!title }">
+      {{ (message || 'MISSING_MESSAGE_PLACEHOLDER') | translate }}
+    </p>
+  </div>
+</div>

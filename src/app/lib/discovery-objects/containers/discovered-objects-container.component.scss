@@ -1,0 +1,39 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+$app-item-detail-view-header-title-color: var(--app-item-detail-view-header-title-color,
+        $base-color-black-08);
+
+.discovered-objects-container {
+  &__title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: $app-item-detail-view-header-title-color;
+  }
+
+  &__add-icon{
+    cursor: pointer;
+  }
+
+  &__context-buttons{
+    position: absolute;
+    right: 30px;
+    z-index: 1000;
+    top: 5px;
+  }
+
+  &__table-holder{
+    position: relative;
+    margin-top: 2rem;
+    height: 100%;
+  }
+}
+
+.content-main {
+  box-sizing: border-box;
+}
+
+eui-button {
+  margin-left: 8px;
+  margin-top: 30px;
+}

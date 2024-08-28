@@ -1,0 +1,37 @@
+<form class="dynamic-inputs-display" [ngClass]="{'dynamic-inputs-display__horizontal-container': displayOrientation === horizontalLayout}">
+
+  <div class="row" *ngFor="let input of inputDataArray">
+    <div class="form-group">
+      <label class="form-group-label">
+        {{ input.name }}
+        <span *ngIf="input.mandatory" class="required">*</span>
+        <eui-icon *ngIf="input.helpMessage" aria-label="info" name="info" matTooltip="{{ input.helpMessage }}"></eui-icon>
+      </label>
+
+      <erad-text-input *ngIf="!hasPickListValues(input)"
+          class="dynamic-text-input"
+          eradKeyboardSupport
+          ngDefaultControl
+          eradKeyboardSupport
+          [label]="'ENTER_VALUE' | translate"
+          [required]="input.mandatory"
+          [value]="formData[input.name]"
+          [(ngModel)]=formData[input.name]
+          [name]="input.name"
+          [pattern]="safeStringPattern"
+          [viewStyle]="viewStyle"
+          [validationErrorMessage]="input.mandatory && formData[input.name]?.length === 0 ? ('INVALID_EMPTY_INPUT' | translate) : ('INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars})">
+      </erad-text-input>
+
+      <erad-dropdown *ngIf="hasPickListValues(input)"
+        class="dynamic-dropdown-input"
+        [viewStyle]="viewStyle"
+        [options]="createDropDownOptions(input)"
+        [optionSelected]="createDropDownOptions(input)[0]"
+        [isDisabled]="false"
+        (changed)="onDropDownOptionChange($event, input)"
+        eradKeyboardSupport>
+      </erad-dropdown>
+  </div>
+</div>
+</form>

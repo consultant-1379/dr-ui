@@ -1,0 +1,1906 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+@import './device-media.scss';
+
+$default-font-family: var(--dnr-font-default);
+$input-focus-background: var(--dnr-form-field-focus-background, $base-color-system-blue);
+$input-label-color: var(--dnr-form-field-label-color, $base-color-gray);
+$dialog-background: var(--dnr-dialog-background, $base-color-white);
+$header-icon-filter: var(--header-icon-filter, invert(0));
+$card-background: var(--erad-components-card-background-color, $base-color-white);
+$card-background-hover: var(--erad-components-card-hover-color, $base-color-light-grayish-blue);
+$label-date-picker: var(--erad-components-date-picker-label-text-color, $base-color-black);
+$form-field-primary-border: var(--field-primary-border, $base-color-gray);
+$scrollbar-track: var(--dnr-scrollbar-track-background, $base-color-gray-light);
+$scrollbar-thumb: var(--dnr-scrollbar-thumb-background, $base-color-gray-82);
+$scrollbar-thumb-hover: var(--dnr-scrollbar-thumb-background-hover, $base-color-dark-gray);
+$card-item-mat-card-shadow: var(--dnr-card-item-mat-card-shadow, $base-color-gray-82);
+$entity-preview-border-color: var(--dnr-entity-preview-border-color, $base-color-gainsboro-gray);
+$entity-preview-color: var(--dnr-entity-preview-color, $base-color-black-02);
+$entity-preview-icon-color-inactive: var(--dnr-entity-preview-icon-color-inactive, $base-color-dark-black);
+$entity-preview-icon-color-active: var(--dnr-entity-preview-icon-color-active, $base-color-white);
+$entity-preview-background-color: var(--dnr-entity-preview-background-color, $base-color-gray-light);
+$main-menu-left-panel-border-color-grey: var(--dnr-border-color-grey, $base-color-gray-87);
+$main-menu-left-panel-card-blue-selected: var(--dnr-card-blue-selected, $base-color-blue-selected);
+$main-menu-left-panel-hover: var(--dnr-main-menu-left-panel-hover, $base-color-gainsboro-gray);
+$main-menu-left-panel-dash: var(--dnr-main-menu-left-panel-dash, $base-color-dim-gray);
+$selected-color: var(--dnr-selected-color, $base-color-blue-selected);
+$preview-border-color: var(--dnr-preview-border-color, $base-color-gray-87);
+$characteristic-preview-border-color: var(--dnr-characteristic-preview-border-color, $base-color-gray-87);
+$dnr-accordion-background-color: var(--dnr-accordion-background-color, $base-color-gainsboro-gray);
+$dnr-accordion-plain-border-bottom-color: var(--dnr-accordion-plain-border-bottom-color, $base-color-gray-light-78);
+$preview-placeholder-color: var(--dnr-preview-placeholder-color, $base-color-black);
+$preview-dark-placeholder-color: var(--dnr-preview-dark-placeholder-color, $base-color-dark-black);
+$shared-search-border-color: var(--dnr-shared-search-border-color, $base-color-gray-87);
+$shared-search-background-color: var(--dnr-shared-search-background-color, $base-color-white);
+$shared-search-text-color: var(--dnr-shared-search-color, $base-color-black);
+$search-background: var(--dnr-ui-characteristic-list-search-background, $base-color-white);
+$search-bar-border-color: var(--dnr-ui-characteristic-search-bar-border-color, $base-color-gray-87);
+$accordion-background-color: var(--dnr-ui-characteristic-card-accordion-background-color, $base-color-white-snow);
+$accordion-border-color: var(--dnr-ui-characteristic-card-accordion-border-color, $base-color-nobel-gray);
+$external-id-card-border-color-light: var(--dnr-ui-external-id-card-border-color-light, $border-color-light);
+$external-id-card-badge-color: var(--dnr-ui-external-id-card-border-color-light, $base-color-hacienda);
+$external-id-base-color: var(--dnr-ui-external-id-card-base-color-black, $base-color-black);
+$actions-card-border-color: var(--dnr-ui-actions-card-border-color, $base-color-blue-selected);
+$actions-card-border-color-light: var(--dnr-ui-actions-card-border-color-light, $border-color-light);
+$actions-card-box-shadow-color: var(--dnr-ui-actions-card-box-shadow-color, $base-color-dark-shadow);
+$external-id-details-base-color: var(--dnr-ui-external-id-details-base-color-black, $base-color-black);
+$external-id-details-border-color: var(--dnr-ui-external-id-details-border-color, $base-color-gray-87);
+$array-formula-checkbox-color: var(--dnr-ui-array-formula-checkbox-color, $base-color-blue-selected);
+$text-area-border-color: var(--dnr-ui-text-area-border-color, $border-color-light);
+$text-area-text-color: var(--dnr-ui-text-area-text-color, $base-color-dim-gray);
+$entity-detail-container-font: var(--dnr-entity-detail-container-font, $base-color-black);
+$entity-detail-container-link-color: var(--dnr-entity-detail-container-link-color, $base-color-dim-gray);
+$entity-detail-container-menu-icon: var(--dnr-entity-detail-container-menu-icon, $base-color-blue-azure);
+$entity-detail-container-background-color: var(--dnr-entity-detail-container-background-color, $base-color-white);
+$entity-detail-container-border-color: var(--dnr-entity-detail-container-border-color, $base-color-gray-medium);
+$entity-detail-container-background-color-white: var(--dnr-entity-detail-container-background-color-white, $base-color-white-snow);
+$project-container-content-background-color: var(--dnr-project-container-content-background-color, $base-color-white-snow);
+$feature-pack-table-bar-bg-color: var(--dnr-feature-pack-table-bar-bg-color, $base-color-white);
+$feature-pack-table-bar-border-color: var(--dnr-feature-pack-table-bar-border-color, $base-color-gray-87);
+$project-container-black-color: var(--dnr-project-container-black-color, $base-color-black);
+$create-item-confirm-button: var(--dnr-create-item-confirm-button, $base-color-blue-selected);
+$create-project-font-color: var(--dnr-create-project-font-color, $base-color-black);
+$create-project-required-color: var(--dnr-create-project-required-color, $base-color-sharp-red);
+$add-characteristic-container-primary-color: var(--dnr-add-characteristic-container-primary-color, $base-color-blue-selected);
+$add-characteristic-container-drop-down-focus-color: var(--dnr-add-characteristic-container-drop-down-focus-color, $base-color-purple-59);
+$dropdown-arrow-icon-color: var(--dnr-characteristic-form-arrow-icon-color, $base-color-dark-gray);
+$confirm-button-color: var(--dnr-confirm-button-color, $base-color-blue-selected);
+$delete-button-color: var(--dnr-delete-button-color, $base-color-sharp-red);
+$cancel-button-border: var(--dnr-cancel-button-border, $base-color-black);
+$confirmation-dialog-background-color: var(--dnr-confirmation-dialog-background-color, $base-color-white);
+$confirmation-dialog-text-color: var(--dnr-confirmation-dialog-text-color, $base-color-black);
+$characteristic-detail-clear-all-color: var(--dnr-characteristic-detail-clear-all-color, $base-color-dark-link);
+$add-external-id-primary-btn-background-color: var(--dnr-ui-add-external-id-primary-btn-background-color, $base-color-blue-selected);
+$dropdown-arrow-icon-color: var(--erad-components-dropdown-arrow-icon-color, $base-color-dark-gray);
+$add-external-id-form-warning-icon-color: var(--dnr-ui-external-id-warning-icon-color, $base-color-strong-orange);
+$card-list-item-value-color: var(--dnr-ui-card-list-item-value-color, $base-color-dark-black);
+$dnr-entity-background-color: var(--erad-components-feature-layout-content-background-color,transparent);
+$dnr-required-asterisk-color: var(--dnr-required-asterisk-color, $base-color-blue);
+$app-side-menu-list-header-title-color: var(--app-side-menu-list-header-title-color, $base-color-black);
+$app-main-menu-left-panel-item-name-view-title-color: var(--app-main-menu-left-panel-item-name-view-title-color, $base-color-black);
+
+.box-title {
+  font-size: $text-regular-medium;
+}
+
+.custom-card .mat-card {
+  border: none;
+  background: $card-background;
+  box-shadow: 0px 2px 3px $card-item-mat-card-shadow;
+
+  &:hover {
+    background: $card-background-hover;
+  }
+
+}
+
+.state-card {
+  height: 100%;
+  position: absolute;
+  width: 4px;
+  z-index: 9;
+}
+
+.custom-accordion {
+  .accordion.border.light {
+    .header {
+      padding-left: 0;
+
+      .title {
+        font-weight: normal;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+// dialog
+.mat-dialog-container {
+  --erad-components-date-picker-label-text-color: var(--app-label-color);
+  --erad-components-date-picker-text-color: var(--dialog-text-color);
+  --erad-components-dialog-wrapper-background-color: var(--dialog-background);
+  --erad-components-dialog-wrapper-content-text-color: var(--dialog-text-color);
+  --erad-components-dialog-wrapper-header-text-color: var(--dialog-text-color);
+  --erad-components-dropdown-mat-select-value-color: var(--dialog-text-color);
+  --erad-components-loader-animation-dot-background-color: var(--app-dot-loading-color);
+  --erad-components-mat-form-field-label-color: var(--app-label-color);
+
+  .date-picker-form {
+    --erad-components-date-picker-underline-focus-color: var(--input-focus-background);
+  }
+
+  &.icon-more:before {
+    color: $input-label-color;
+  }
+
+  &.mat-dialog-container {
+    background: var(--dialog-background);
+  }
+}
+
+// Calendar
+.mat-calendar {
+  --erad-components-date-picker-label-text-color: var(--app-label-color);
+  --erad-components-date-picker-label-background-color: var(--dialog-background);
+  --erad-components-date-picker-text-color: var(--dialog-text-color);
+  --erad-components-date-picker-invalid-text-color: var(--dialog-text-color);
+  --erad-components-date-picker-background-color: var(--dialog-background);
+  --erad-components-date-picker-placeholder-color: var(--dialog-text-color);
+  --erad-components-date-picker-underline-color: var(--field-primary-border);
+  --erad-components-date-picker-underline-focus-color: var(--dialog-text-color);
+  --erad-components-date-picker-underline-invalid-color: var(--dialog-text-color);
+  --erad-components-date-picker-icon-color: var(--dialog-text-color);
+  --erad-components-date-picker-focused-icon-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-background-color: var(--dialog-background);
+  --erad-components-date-picker-panel-year-selector-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-year-selector-arrow-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-previous-button-arrow-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-next-button-arrow-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-weekday-label-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-month-label-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-number-label-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-number-label-selected-text-color: var(--dialog-text-color);
+  --erad-components-date-picker-panel-number-label-selected-background-color: var(--dialog-background);
+  --erad-components-date-picker-panel-number-label-hover-color: var(--app-action-list-item-hover);
+  --erad-components-date-picker-panel-today-border-color: var(--dialog-text-color);
+}
+
+// notification
+.notification-holder {
+  --erad-components-notification-title-color: var(--dialog-text-color);
+  --erad-components-notification-background-color: var(--dialog-background);
+  --erad-components-notification-close-icon-color: var(--dialog-text-color);
+  --erad-components-notification-holder-shadow-color: var(--dialog-background);
+  --erad-components-collapse-text-color: var(--dialog-text-color);
+  --erad-components-notification-border-hover-color: var(--field-primary-border);
+}
+
+// fields
+.mat-form-field {
+  --erad-components-text-input-text-color: var(--app-text-color);
+  --erad-components-text-input-label-text-color: var(--app-text-color);
+  --erad-components-text-input-underline-color: var(--field-primary-border);
+  --erad-components-text-input-underline-focus-color: var(--app-bar-tab);
+  --erad-components-text-input-hint-text-color: var(--app-text-color);
+  --erad-components-dropdown-underline-color: var(--field-primary-border);
+  --erad-components-date-picker-underline-color: var(--field-primary-border);
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline,
+.mat-form-field-appearance-standard .mat-form-field-underline,
+.mat-form-field-appearance-standard.mat-form-field-disabled div.mat-form-field-underline {
+  background-color: $form-field-primary-border;
+}
+
+.mat-radio-outer-circle {
+  border-color: $form-field-primary-border;
+}
+
+.date-picker-form .mat-form-field.mat-form-field-appearance-legacy .mat-form-field-wrapper .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label mat-label {
+  --erad-components-date-picker-label-text-color: var(--dnr-form-field-label-color);
+  color: var(--dnr-form-field-label-color);
+}
+
+.mat-tab-header {
+  border-color: $form-field-primary-border;
+}
+
+// buttons
+.primary:not([disabled]) {
+  --erad-components-button-primary-background-color: var(--button-primary-background);
+  --erad-components-button-primary-text-color: var(--button-primary-text-color);
+  --erad-components-button-primary-border-color: var(--button-primary-border);
+
+  &:hover {
+    --erad-components-button-primary-background-color: var(--button-primary-background-hover);
+    --erad-components-button-primary-text-color: var(--button-primary-text-color-hover);
+    --erad-components-button-primary-border-color: var(--button-primary-border-hover);
+  }
+}
+
+.button-secondary {
+  --erad-components-button-secondary-background-color: var(--button-secondary-background);
+  --erad-components-button-secondary-text-color: var(--button-secondary-text-color);
+  --erad-components-button-secondary-border-color: var(--button-secondary-border);
+
+  &:hover {
+    --erad-components-button-secondary-background-color: var(--button-secondary-background-hover);
+    --erad-components-button-secondary-text-color: var(--button-secondary-text-color-hover);
+    --erad-components-button-secondary-border-color: var(--button-secondary-border-hover);
+  }
+}
+
+// action list
+.mat-menu-panel.erad-action-list-menu {
+  --erad-components-action-list-menu-background-color: var(--dialog-background);
+
+  .mat-menu-content .mat-menu-item {
+    --erad-components-action-item-text-color: var(--dialog-title);
+
+    &:hover {
+      background-color: var(--app-action-list-item-hover);
+      --erad-components-action-item-text-color: var(--dialog-background);
+    }
+  }
+}
+
+// app switcher
+.backdrop {
+  --erad-app-switcher-backdrop-color: var(--app-switcher-background);
+
+  .app {
+    --erad-app-switcher-item-background-color: var(--app-switcher-item-background);
+    --erad-app-switcher-item-text-color: var(--app-switcher-item-text-color);
+    outline-offset: -5px;
+    outline: 5px solid var(--app-switcher-item-border);
+
+    &:hover {
+      --erad-app-switcher-item-background-hover-color: var(--app-switcher-item-background-hover);
+      --erad-app-switcher-item-text-color: var(--app-switcher-item-text-color-hover);
+    }
+  }
+}
+
+// profile bar
+.user-profile-bar {
+  --erad-components-dropdown-mat-select-value-color: var(--menu-text-color);
+  --erad-components-mat-form-field-label-color: var(--menu-text-color);
+  --erad-system-panel-background-color: var(--profile-bar-button-background);
+
+  button {
+    span {
+      color: var(--profile-bar-button-text-color);
+    }
+
+    &:hover {
+      span {
+        color: var(--profile-bar-button-text-color-hover);
+      }
+    }
+  }
+}
+
+erad-feature-layout {
+  .feature-layout-wrapper {
+    .content-layout-wrapper {
+      height: 80vh;
+      .content-wrapper.main {
+        background-color: var(--feature-layout-background);
+        padding: 0;
+        @include tablet {
+          min-width: 480px;
+        }
+      }
+    }
+  }
+}
+
+dnr-app-item-detail-view-container {
+  erad-feature-layout {
+    .feature-layout-wrapper {
+      .main {
+        padding-top: 0px !important;
+      }
+    }
+  }
+}
+
+// characteristic details
+.characteristic-details {
+
+  erad-date-picker .date-picker-form,
+  erad-dropdown .dropdown-form.full-width {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  erad-text-input {
+    textarea.mat-input-element.cdk-textarea-autosize {
+      color: $text-area-text-color;
+    }
+  }
+
+  erad-status-badge .erad-status-badge {
+    max-width: fit-content;
+  }
+
+  erad-switch-button .switch {
+    width: fit-content;
+  }
+}
+
+.characteristic-details,
+.relation-details {
+
+  erad-number-input .number-form,
+  erad-text-input .text-input-form {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  erad-text-input {
+    .textarea-width {
+      border: 1px solid $text-area-border-color;
+      padding: 8px;
+      height: 100px;
+    }
+
+    mat-form-field {
+      .mat-form-field-wrapper {
+        .mat-form-field-flex {
+          padding: 0;
+
+          .mat-form-field-infix {
+            padding: 0;
+            border-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  erad-card {
+    .mat-card {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      padding-left: 0;
+      &:hover {
+        background: none;
+        cursor: auto;
+      }
+    }
+
+    .mat-card:not([class*=mat-elevation-z]) {
+      box-shadow: none;
+    }
+  }
+
+  .characteristic-default-value-header {
+    .clear-text {
+      padding: 0px;
+    }
+    erad-button {
+      a {
+        padding: 0px;
+        mat-button {
+          padding: 0px;
+
+        }
+      }
+      .label {
+        color: $characteristic-detail-clear-all-color;
+      }
+    }
+  }
+}
+
+.relation-details {
+  erad-card {
+    .header {
+      div {
+        font-weight: $font-weight-lighter;
+      }
+    }
+  }
+
+  .mat-form-field {
+    width: 135px;
+  }
+
+  .dash {
+    width: initial;
+  }
+}
+
+// shared side drawer
+erad-side-menu-list-v2 {
+  &.shared-main-menu-left-panel {
+    .side-menu-list-container {
+      width: auto;
+    }
+
+    .options-container {
+      margin-left: 12px;
+      font-size: $text-regular;
+      top: 64px;
+      width: calc((100%) - 26px);
+      max-width: none;
+      min-width: 150px;
+    }
+
+    .toolbar {
+      >.top-area {
+        mat-icon {
+          height: 16px;
+          width: 16px;
+          font-size: $text-medium-large-ss;
+        }
+
+        .active-item-name {
+          font-size: $text-large;
+          padding-left: 8px;
+          color: $app-side-menu-list-header-title-color;
+        }
+
+        .drop-down-title {
+          padding-left: 8px;
+          padding-top: 0;
+        }
+
+        .close-button {
+          padding: 8px;
+        }
+
+        .mat-ripple {
+          height: 60px;
+        }
+
+        border-bottom: 1px solid $main-menu-left-panel-border-color-grey;
+        margin: 0 12px;
+        height: 60px;
+      }
+    }
+
+    .item-cards {
+      margin: 0 12px;
+      width: auto;
+
+      .dotted-line {
+        border-bottom: 1px dashed $main-menu-left-panel-dash;
+      }
+    }
+
+    .item-card {
+      margin: 6px 0;
+      height: 72px;
+      padding: 0;
+
+      p {
+        margin: 0;
+      }
+
+      .item-card-title {
+        margin: 0;
+        padding: 6px 1px;
+      }
+
+      .selected {
+        .circle {
+          background-color: $main-menu-left-panel-card-blue-selected;
+          border: 0;
+        }
+
+        .item-card-title {
+          padding: 5px 0;
+        }
+      }
+    }
+  }
+}
+
+// General Information
+.general-information-container {
+  erad-text-input .text-input-form {
+    min-height: 32px;
+
+    textarea {
+      line-height: 1.5em;
+    }
+  }
+
+  erad-text-input .text-input-form,
+  erad-date-picker .date-picker-form {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  erad-date-picker .erad-bordered-date-picker .mat-form-field-flex {
+    .mat-form-field-infix {
+      height: 28px;
+    }
+  }
+
+  erad-date-picker .erad-bordered-date-picker .mat-form-field-flex,
+  erad-text-input .erad-bordered-text-area-input,
+  erad-text-input .erad-bordered-text-input,
+  erad-dropdown .erad-bordered-dropdown,
+  .mat-checkbox-frame {
+    border: 1px solid $preview-border-color;
+  }
+
+  erad-date-picker .date-picker-form input.mat-input-element,
+  erad-text-input .mat-input-element,
+  erad-dropdown .dropdown-form .dropdown .mat-select-trigger .mat-select-value {
+    color: $preview-placeholder-color;
+    font-size: $text-regular;
+  }
+
+  .row-container {
+    erad-text-input .mat-input-element {
+      color: $preview-dark-placeholder-color;
+    }
+  }
+
+  .mat-checkbox-frame {
+    border-radius: 0;
+  }
+
+  .attribute {
+    .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    &.is-composite {
+
+      .mat-checkbox-checked .mat-checkbox-background,
+      .mat-checkbox-indeterminate .mat-checkbox-background {
+        background-color: $selected-color;
+      }
+    }
+  }
+
+  .mat-checkbox-inner-container {
+    height: 14px;
+    width: 14px;
+    line-height: 1em;
+  }
+
+  .description {
+    form {
+      &.text-input-form.erad-bordered-text-area-input {
+        min-height: 106px;
+      }
+    }
+  }
+
+  .classification {
+
+    erad-text-input .text-input-form,
+    erad-dropdown .erad-bordered-dropdown {
+      max-width: 100%;
+      min-width: 100%;
+      height: 32px;
+    }
+  }
+}
+
+.general-information-tooltip {
+
+  &.row-container,
+  &.classification-tooltip {
+    font-size: $text-regular;
+    line-height: 1.5em;
+    min-height: 25px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    min-width: 100%;
+    border-radius: 0%;
+  }
+
+  &.row-container {
+    margin-bottom: 18px;
+  }
+
+  &.classification-tooltip {
+    margin-bottom: -13px;
+  }
+}
+
+// shared search
+.dnr-shared-search .light.search-bar {
+  background-color: $shared-search-background-color;
+  border: 1px solid $shared-search-border-color;
+  padding-left: 8px;
+  color: $shared-search-text-color;
+  display: flex;
+  align-items: center;
+
+  input {
+    margin: 0;
+  }
+}
+
+.dnr-shared-search .light.search-bar .search-button {
+  margin: 0;
+}
+
+.dnr-shared-search .hide-search-icon .light.search-bar .search-button {
+  display: none;
+}
+
+// external id list and list item
+.external-id-card-list .accordion.light div.header {
+  border-bottom: 1px solid $external-id-card-border-color-light;
+  margin-top: 5px;
+  margin-bottom: 11px;
+  position: relative;
+  padding-top: 5px;
+  font-weight: $font-weight-normal;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+
+  .icon-wrapper span {
+    font-size: $text-large;
+    position: relative;
+    left: -5px;
+    padding-left: 16px;
+  }
+}
+
+.external-id-card-list .accordion .header .icon-wrapper div span::before {
+  position: absolute;
+  width: 0;
+  height: 0;
+  content: '';
+  top: 0;
+  left: 0;
+  border: 8px solid;
+  border-color: $external-id-card-badge-color transparent transparent $external-id-card-badge-color;
+}
+
+div.external-id-card-list div.accordion>div.content {
+  margin-bottom: 42px;
+}
+
+.external-id-card-list .accordion.border.light {
+  border-bottom: none;
+}
+
+.external-id-card-list .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.external-id-card-list .mat-card {
+  box-shadow: none;
+}
+
+div.external-id-card-list div.mat-form-field-infix {
+  padding: 8px;
+  border: 1px solid $external-id-card-border-color-light;
+}
+
+.external-id-card-list input.mat-input-element {
+  height: 16px;
+}
+
+.external-id-card-list-item {
+  .card-title {
+    .action-list button {
+      width: 16px;
+      height: 16px;
+      line-height: 0;
+
+      .mat-button-wrapper>* {
+        line-height: 1em;
+      }
+    }
+  }
+
+  erad-text-input {
+    .mat-input-element:disabled {
+      color: $card-list-item-value-color;
+    }
+  }
+}
+
+.characteristic-form {
+  .type-dropdown {
+    erad-dropdown {
+      .erad-bordered-dropdown{
+        width: 250px;
+        height: 32px;
+      }
+
+      .dropdown .mat-select-arrow {
+        color: $dropdown-arrow-icon-color;
+        visibility: visible;
+      }
+
+      .dropdown .mat-select-arrow::after {
+        visibility: hidden;
+        content: "\e920";
+        font-family: "Ericsson Icons", sans-serif;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        padding-left: 0;
+        right: 8px;
+        transform-origin: center;
+        top: 50%;
+        margin-top: -6px;
+        transform: translateZ(0);
+        transition: transform ease-out 0.2s;
+        line-height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $text-regular;
+        pointer-events: none;
+      }
+    }
+
+    erad-text-input, erad-number-input {
+      width: 250px;
+      height: 32px;
+      .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+          padding-bottom: 0
+        }
+      .mat-form-field-wrapper {
+        padding-bottom: 0
+      }
+    }
+  }
+
+  erad-text-input .text-input-form {
+    max-width: unset;
+  }
+}
+
+.add-characteristic-container {
+  erad-button {
+    width: 64px;
+    height: 32px;
+    margin: 8px 11px;
+    .mat-button {
+      padding: 0;
+    }
+    .primary {
+      background-color: $add-characteristic-container-primary-color;
+    }
+    .mat-button.mat-button-disabled.primary {
+      background-color: $add-characteristic-container-primary-color;
+      opacity: 40%;
+    }
+  }
+
+  erad-dialog-wrapper {
+    .mat-dialog-actions {
+      padding: 0;
+    }
+
+    .actions {
+      padding-top: 40px;
+    }
+  }
+}
+
+// external id details
+.external-id-details {
+  .external-id-details-content {
+    .content-control-group {
+      .mat-form-field-infix {
+        padding-top: 0;
+        border-top: 0;
+
+        input {
+          color: $external-id-details-base-color;
+        }
+      }
+
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .erad-bordered-text-input {
+        height: auto;
+        border-color: $external-id-details-border-color;
+      }
+
+      .dropdown-form.full-width {
+        color: $external-id-details-base-color;
+        border-color: $external-id-details-border-color;
+      }
+    }
+  }
+}
+
+// actions list and list item
+.actions-card-list #dnr-accordion erad-accordion .accordion.border.light div.header {
+  border: none;
+  border-bottom: 1px solid $actions-card-border-color-light;
+  background-color: $base-color-gray-light;
+  margin-bottom: 11px;
+  position: relative;
+  padding-top: 5px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+div.actions-card-list div.accordion>div.content {
+  margin-bottom: 42px;
+}
+
+.actions-card-list-item {
+  .card-title {
+    .action-list button {
+      width: 16px;
+      height: 16px;
+      line-height: 0;
+
+      .mat-button-wrapper>* {
+        line-height: 1em;
+      }
+    }
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  input.mat-input-element {
+    height: 16px;
+  }
+
+  .mat-card {
+    border-color: $actions-card-border-color-light;
+    box-shadow: none;
+  }
+
+  .card-list-item-selected {
+    .mat-card {
+      border: 2px solid $actions-card-border-color;
+      box-shadow: 0 3px 6px $actions-card-box-shadow-color;
+    }
+  }
+}
+
+// scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $scrollbar-thumb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-thumb-hover;
+}
+
+#dnr-item-information-details {
+  border-bottom: 1px solid $entity-preview-border-color;
+  .selectable .right-aligned-items .badge {
+    margin-right: 46px;
+  }
+
+  erad-collapsible-item {
+    div.content {
+      padding: 0;
+      overflow: visible !important;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      height: 54px;
+      border-top: 1px solid $entity-preview-border-color;
+      background-color: $dnr-entity-background-color;
+    }
+
+    .left-aligned-items {
+      display: flex;
+      align-items: center;
+
+      .text-holder {
+        font-size: 16px;
+        margin-left: 8px;
+        margin-top: 0;
+        font-weight: 500;
+      }
+
+      .icon-holder {
+        padding: 0;
+        margin-left: 8px;
+        margin-top: 5px;
+      }
+    }
+
+    &.space-between {
+      .right-aligned-items {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .icon-holder img {
+        width: 1.3rem;
+      }
+    }
+
+    .right-aligned-items {
+      // forcing justify-content as application link-out icon moves
+      // to left with new panels opening
+      justify-content: flex-end !important;
+      display: flex;
+      width: auto;
+
+      .badge {
+        margin-right: 18px;
+
+        span {
+          border: 1px solid $base-color-gray-70-light;
+          width: 43px;
+          height: 27px;
+          padding-top: 0;
+          font-size: $text-regular;
+          color: var(--erad-base-color-black, #242424);
+        }
+      }
+
+      .badgeSelected {
+        margin-right: 46px;
+
+        span {
+          width: 43px;
+          height: 27px;
+          padding-top: 0;
+          font-size: $text-regular;
+        }
+      }
+
+      .navigation-icon-holder {
+        margin-left: 0;
+        margin-top: 5px;
+        margin-right: 0;
+        outline: 0;
+      }
+    }
+
+    .icon-holder img {
+      width: 1.3rem;
+    }
+
+    .entity-info {
+      .mat-select-min-line {
+        font-size: $text-regular;
+      }
+
+      .mat-select-trigger {
+        width: 33%;
+      }
+
+      .erad-bordered-dropdown {
+        border: none;
+        background-color: $base-color-white-snow;
+      }
+
+      .dropdown .mat-select-arrow {
+        color: $entity-preview-icon-color-inactive;
+      }
+    }
+  }
+
+  eds-icon {
+    color: $entity-preview-icon-color-inactive;
+
+    :not(.actions) {
+      em.icon {
+        font-size: $text-regular-large-22;
+      }
+    }
+
+    em.icon.icon-launch {
+      font-size: $text-regular-medium;
+      margin-right: 4px;
+    }
+  }
+
+  .erad-status-badge-plain {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+    font-size: $text-regular;
+    max-height: 24px;
+    max-width: 98px;
+
+    .status-circle {
+      min-width: 12px;
+      margin-top: 0;
+    }
+
+    span:nth-child(2) {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      min-width: 13px;
+    }
+  }
+
+  .erad-bordered-dropdown {
+    background-color: $entity-detail-container-background-color-white;
+  }
+
+  #dnr-accordion {
+    div.content {
+      padding: 0;
+    }
+  }
+}
+
+.error-details-section {
+  #dnr-item-information-details {
+    border-bottom: 1px solid var(--dnr-entity-preview-border-color, var(--erad-base-color-gainsboro-gray, #dcdcdc));
+    erad-collapsible-item {
+      pointer-events: none;
+      .left-aligned-items {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        width: 100%;
+        justify-content: space-between;
+        .icon-holder {
+          padding: 0;
+          margin-right: 0px;
+          margin-left: 0px;
+          margin-top: 5px;
+        }
+      }
+    }
+    dnr-copy-download {
+      top: 60px;
+    }
+  }
+}
+
+//erad-accordion
+#dnr-accordion {
+  erad-accordion {
+    .accordion.border.light div.header {
+      padding: 0;
+      margin: 4px 0;
+      height: 32px;
+      border: 1px solid $border-color-light;
+      border-radius: 3px;
+      background-color: $dnr-accordion-background-color;
+      display: flex;
+      position: relative;
+    }
+
+    .accordion.border {
+      border-bottom: none;
+    }
+
+    .icon-holder {
+      margin-top: 3px;
+      margin-right: -2px;
+      flex: 0 0 23px;
+
+      em.icon {
+        font-size: $text-medium-large-ss;
+        font-weight: $font-weight-normal;
+        margin: 0 5px;
+      }
+    }
+
+    .icon-wrapper {
+      flex: 9;
+    }
+
+    &.plain {
+      .accordion.border.light div.header {
+        height: 40px;
+        border: none;
+        border-bottom: 1px solid $dnr-accordion-plain-border-bottom-color;
+        background-color: transparent;
+        margin: 20px 0 16px 0;
+
+        &:focus {
+          outline: none;
+        }
+
+        .icon-wrapper {
+          margin-bottom: 16.5px;
+
+          .title {
+            font-size: $text-large;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.characteristic-card-list {
+  erad-search-bar {
+    .light.search-bar {
+      height: 32px;
+      width: 701px;
+
+      input {
+        margin: 8px;
+      }
+
+      button {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .characteristic-card-list {
+    erad-search-bar {
+      .light.search-bar {
+        width: 85%;
+      }
+    }
+  }
+}
+
+.characteristic-card-list-item {
+  erad-dropdown .erad-bordered-dropdown {
+    margin-top: 1px;
+  }
+
+  erad-text-input .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 6px 0 3px;
+  }
+
+  erad-dropdown .erad-bordered-dropdown .dropdown {
+    height: 30px;
+    padding-top: 0;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0;
+  }
+
+  .array-type-card {
+    .mat-card {
+      padding-bottom: 0;
+    }
+  }
+
+  //erad-card
+  erad-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      padding-bottom: 24px;
+    }
+
+    .card-title-array {
+      padding-bottom: 16px;
+    }
+
+    .action {
+      text-align: right;
+    }
+
+    erad-status-badge {
+      padding-right: 8px;
+      padding-bottom: 8px;
+    }
+
+    .erad-status-badge {
+      padding: 0 8px;
+
+      .status-circle {
+        width: 0;
+      }
+    }
+
+    .erad-status-badge-plain {
+      margin-bottom: 8px;
+    }
+  }
+
+  .mat-card {
+    min-height: 82px;
+  }
+}
+
+.restrict-value-container {
+  erad-status-badge {
+    .erad-status-badge .status-circle {
+      display: none;
+    }
+  }
+}
+
+//erad-tabs
+.tabs-navigation {
+  .mat-elevation-z4 {
+    box-shadow: none;
+  }
+
+  erad-tabs {
+    .tab-label .label-text {
+      padding: 3px 0 0;
+    }
+  }
+
+}
+
+//browse-catalog
+#browse-catalog-container {
+
+  erad-drag-drop {
+    .drag-drop-container {
+      width: 316px;
+      display: block;
+      margin-top: 16px;
+    }
+
+    .drag-drop-list {
+      min-height: 0;
+      background-color: unset;
+    }
+
+    .drag-drop-box-place-holder {
+      margin-bottom: 0;
+    }
+
+    .drag-drop-box {
+      width: 316px;
+      margin-bottom: 16px;
+      height: 51px;
+      text-align: left;
+      letter-spacing: 0;
+      color: $base-color-black;
+      opacity: 1;
+    }
+  }
+
+  erad-search-bar .light.search-bar {
+    background-color: $base-color-white;
+    border: 1px solid $base-color-gray-87;
+    opacity: 1;
+    input {
+      margin-top: 0px !important;
+    }
+  }
+
+  erad-initial {
+    .circle {
+      background: $base-color-blue-selected 0% 0% no-repeat padding-box;
+      border: 1px solid $base-color-blue-selected;
+    }
+  }
+
+  erad-card {
+    .mat-card {
+      background: none;
+    }
+  }
+}
+
+.content-wrapper {
+  erad-search-bar {
+    .light.search-bar {
+      border: 1px solid var(--dnr-feature-pack-table-bar-border-color, $base-color-gray-87);
+      height: 30px;
+      background-color: $shared-search-background-color
+    }
+    .light.search-bar button {
+      margin: 7px 9px 0 15px !important;
+    }
+    .light.search-bar input {
+      margin-top: 5px;
+      @include tablet {
+        width: 100%;
+      }
+    }
+  }
+}
+
+erad-dropdown {
+  .dropdown {
+    .mat-select-arrow-wrapper {
+      .mat-select-arrow {
+        color: $entity-preview-icon-color-inactive;
+        visibility: hidden;
+
+        &::after {
+          content: url('././../../assets/icons/chevron-down.svg');
+          transform: scale(0.5);
+          opacity: 0.5;
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+
+.main-menu-left-panel {
+  erad-side-menu-list-v2 {
+    .drop-down-title .active-item-name {
+      font-weight: $font-weight-lighter;
+    }
+
+    .item-name {
+      color: $app-main-menu-left-panel-item-name-view-title-color;
+    }
+  }
+}
+
+//entity-search-container
+#entity-search-container {
+  erad-content-layout {
+    .content-wrapper {
+      height: initial;
+
+      &.right-border {
+        max-width: 356px;
+        min-width: 200px;
+        padding: 12px;
+      }
+
+      &.left-border {
+        max-width: 368px;
+        min-width: 200px;
+      }
+    }
+  }
+}
+
+//entity-detail-container
+#entity-detail-container {
+  erad-content-layout {
+
+    .content-main-wrapper,
+    .content-wrapper {
+      background-color: $entity-detail-container-background-color-white;
+    }
+
+    .content-wrapper {
+      height: 80vh;
+
+      &.right-border {
+        max-width: 370px;
+        min-width: 200px;
+      }
+
+      &.left-border {
+        max-width: 380px;
+        min-width: 200px;
+      }
+    }
+  }
+
+  .feature-layout-wrapper {
+    erad-toolbar {
+      mat-toolbar.mat-toolbar.erad-toolbar {
+
+        .toggle-container>div {
+          display: flex;
+
+          .breadcrumb {
+            font-size: $text-medium-large-ss;
+
+            .link {
+              color: $entity-detail-container-link-color;
+              font-size: 14px;
+            }
+          }
+
+          .icon-nav {
+            color: $entity-detail-container-menu-icon;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs-navigation {
+    background-color: $entity-detail-container-background-color;
+    border-bottom: 2px solid $entity-detail-container-border-color;
+    height: 47px;
+
+    .tabs-navigation-icon {
+      padding: 12px;
+    }
+
+    .tabs-navigation-group {
+      padding: 11px 0 0 40px;
+    }
+  }
+
+  .general-information-container {
+    .base-entity-card {
+      .card-wrapper {
+        width: 370px;
+      }
+    }
+  }
+
+  #erad-hierarchy-container>svg {
+    height: 750px;
+  }
+}
+
+.project-container, .base-configuration-container {
+  erad-content-layout {
+    .content-main-wrapper,
+    .content-wrapper {
+      background-color: $project-container-content-background-color;
+    }
+
+    .content-wrapper:has(.content-right) {
+      max-width: 368px;
+    }
+
+    .container-actions {
+      eds-icon {
+        height: 22px;
+        width: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          font-size: $text-medium-large-ss;
+          color: $project-container-black-color;
+
+    .content-layout-wrapper .content-wrapper.right-border {
+      padding: 12px;
+    }
+
+        .icon-plus {
+          font-size: $text-regular;
+        }
+      }
+
+      erad-action-list {
+        .action-list {
+          height: 22px;
+
+          button.mat-icon-button.mat-button-base {
+            margin-top: -6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+
+    .header .expand-button .icon-search {
+      color: $base-color-black;
+    }
+  }
+}
+
+.base-configuration-container {
+  erad-content-layout {
+    .content-wrapper.main {
+      display: block !important;
+      .content {
+        height: 100%;
+      }
+    }
+  }
+  erad-side-menu-list-v2 {
+    .toolbar {
+      >.top-area {
+        .close-button {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.feature-pack-table {
+  .entity-search-bar {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  erad-search-bar.project-search-bar {
+    .search-bar {
+      height: 32px;
+      max-width: 700px;
+      background-color: $feature-pack-table-bar-bg-color;
+      border: 1px solid $feature-pack-table-bar-border-color;
+
+      .ft-search-bar {
+        margin-top: 8px;
+        margin-left: 8px;
+      }
+
+      .search-button {
+        display: none;
+      }
+    }
+  }
+
+  .dnr-table-container {
+    .loader.light {
+      transform: scale(1.5);
+      top: 25%;
+      position: relative;
+    }
+  }
+}
+
+.create-item-container {
+  .header {
+    color: $base-color-black;
+  }
+
+  erad-button {
+    margin-right: 10px;
+
+    .primary {
+      background-color: $base-color-cyan-blue-dark;
+    }
+
+    .mat-button.mat-button-disabled.primary {
+      opacity: 0.4;
+      background-color: $base-color-cyan-blue-dark;
+   }
+  }
+}
+
+.item-form {
+  erad-text-input.description {
+    mat-form-field {
+      height: 100px;
+    }
+  }
+
+  erad-autocomplete-input {
+    mat-form-field {
+      width: calc(100% - 10px);
+      margin-top: 0;
+
+      .mat-form-field-flex {
+        padding-top: 0;
+      }
+
+      .mat-form-field-infix {
+        border-style: solid;
+        border-width: thin;
+        border-color: $border-color-light;
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
+.create-item-version-container {
+  .header {
+    color: $base-color-black;
+  }
+
+  .subtitle {
+    color: $base-color-dim-gray;
+    font-size: $text-regular-medium-15;
+    padding-left: 8px;
+  }
+
+  erad-button {
+    margin-right: 10px;
+
+    .primary {
+      background-color: $base-color-cyan-blue-dark;
+    }
+
+    .mat-button.mat-button-disabled.primary {
+      opacity: 0.4;
+      background-color: $base-color-cyan-blue-dark;
+    }
+  }
+}
+
+.item-version-form {
+  erad-text-input.description {
+    mat-form-field {
+      height: 100px;
+    }
+  }
+
+  erad-autocomplete-input {
+    mat-form-field {
+      width: calc(100% - 10px);
+      margin-top: 0;
+
+      .mat-form-field-flex {
+        padding-top: 0;
+      }
+
+      .mat-form-field-infix {
+        border-style: solid;
+        border-width: thin;
+        border-color: $border-color-light;
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
+.create-project-dialog-container {
+  .mat-dialog-content {
+    overflow: initial;
+  }
+
+  .mat-dialog-title {
+    margin: 0 0 18px 0;
+  }
+
+  .action-buttons {
+    erad-button {
+
+      .mat-button {
+        &.button-secondary {
+          background-color: transparent;
+        }
+
+        &.primary {
+          background-color: $create-item-confirm-button ;
+
+          &.mat-button-disabled {
+            opacity: 0.4;
+          }
+        }
+      }
+
+      button {
+        line-height: 1.5em;
+        padding: 0 12px;
+
+        .label {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+.create-project-form {
+
+  .description {
+    .text-input-form.erad-bordered-text-area-input {
+      min-height: 106px;
+      max-width: 524px;
+    }
+  }
+
+  erad-date-picker {
+    .date-picker-form {
+      max-width: 524px;
+    }
+
+    .erad-bordered-date-picker .mat-form-field-flex {
+      .mat-form-field-infix {
+        height: 28px;
+      }
+    }
+  }
+
+  .error-correction {
+    erad-selection {
+
+      .mat-checkbox-checked .mat-checkbox-background,
+      .mat-checkbox-indeterminate .mat-checkbox-background {
+        background-color: $create-item-confirm-button;
+      }
+    }
+  }
+}
+
+.confirmation-container {
+  .mat-dialog-title.dialog-header {
+    erad-info-popup eds-icon {
+      em.icon-triangle-warning {
+        color: $add-external-id-form-warning-icon-color;
+      }
+    }
+  }
+
+  .dialog-content {
+    white-space: pre-line;
+  }
+
+  .mat-dialog-actions.actions {
+    .dialog-actions {
+      button {
+        &.primary {
+          background-color: $confirm-button-color;
+          border: 1px solid $confirm-button-color;
+        }
+
+        &.button-secondary {
+          background-color: transparent;
+          border: 1px solid $cancel-button-border;
+        }
+      }
+
+      erad-button {
+        min-width: 76px;
+        height: 32px;
+      }
+
+      /**
+      * Make destructive action button Red in DNR-UI.
+      * ERAD confirmation dialog component does not have support
+      * to provide custom color except the create custom theme.
+      * (adding "destructive" class name via javascript (not to use ng-reflect-label, as
+      * that will not be in production build version))
+      */
+      erad-button.destructive {
+        button.primary {
+          background-color: $delete-button-color;
+          border: 1px solid $delete-button-color;
+        }
+      }
+
+      span.label {
+        padding: 0;
+      }
+    }
+  }
+}
+.override-external-id-modal {
+  .mat-dialog-actions.actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  erad-button {
+    button.primary {
+      background-color: $add-external-id-primary-btn-background-color;
+    }
+    button.button-secondary {
+      background-color: transparent;
+    }
+  }
+}
+
+.add-external-id-container {
+  .dialog-container .mat-dialog-content {
+    overflow: unset;
+  }
+
+  .dialog-container .mat-dialog-title {
+    margin-bottom: 0;
+  }
+
+  .mat-dialog-actions.actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  erad-text-input .text-input-form {
+    max-width: none;
+  }
+
+  erad-button {
+    button.primary {
+      background-color: $add-external-id-primary-btn-background-color;
+    }
+    button.button-secondary {
+      background-color: transparent;
+    }
+  }
+
+  erad-dropdown {
+
+    .dropdown .mat-select-arrow {
+      color: $dropdown-arrow-icon-color;
+      visibility: visible;
+    }
+
+    .dropdown .mat-select-arrow::after {
+      visibility: hidden;
+      content: "\e920";
+      font-family: "Ericsson Icons", sans-serif;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      padding-left: 0;
+      right: 8px;
+      transform-origin: center;
+      top: 50%;
+      margin-top: -6px;
+      transform: translateZ(0);
+      transition: transform ease-out 0.2s;
+      line-height: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $text-regular;
+      pointer-events: none;
+    }
+  }
+
+}
+
+.confirm-external-id-modal {
+  .mat-dialog-actions.actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  erad-button {
+    button.primary {
+      background-color: $add-external-id-primary-btn-background-color;
+    }
+    button.button-secondary {
+      background-color: transparent;
+    }
+  }
+}
+
+[aria-disabled="true"], *:disabled {
+  .mat-select-arrow:after {
+    opacity: 0.4 !important;
+  }
+}
+
+[ng-reflect-is-disabled="true"] {
+  .erad-bordered-text-input, .erad-bordered-text-area-input {
+    border: 1px solid rgb(157,157,157, .4) !important;
+  }
+}
+
+erad-dropdown .dropdown-form.full-width {
+  &.mat-form-field-disabled {
+    border: 1px solid rgb(157,157,157, .4) !important ;
+  }
+}
+
+input[type="datetime-local"]:disabled {
+  border: 1px solid rgb(157,157,157, .4) !important ;
+}
+
+erad-breadcrumb {
+  a.link {
+    color: #6a6a6a !important;
+    font-size: 14px;
+  }
+}
+
+.dnr-info-heading {
+  height: 32px;
+  width: 100%;
+  font-size: $text-large;
+  font-weight: 500;
+  color: var(--erad-base-color-black, #242424);
+}

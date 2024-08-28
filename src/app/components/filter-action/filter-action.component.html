@@ -1,0 +1,46 @@
+<div id="dnr-filter-action-detail">
+    <ng-container>
+      <div class="general-information">
+        <div class="description flex">
+          <p class="medium bold">
+            {{ filterName }}
+          </p>
+        </div>
+        <div class="description">
+          <p class="small">
+            {{ "discoveredObjects.ACTION_NAME" | translate }}
+          </p>
+          <span class="medium">{{ reconcileActionName }}
+          </span>
+        </div>
+        <div class="description">
+          <p class="small">
+            {{ "discoveredObjects.STATUS" | translate }}
+          </p>
+          <span *ngIf="!isFailedStatus(status)" class="medium">{{ "state." + status | translate}} </span>
+          <span *ngIf="isFailedStatus(status)" class="medium bold">{{ "state." + status | translate}} </span>
+        </div>
+        <div class="description">
+          <p class="small">
+            {{ "discoveredObjects.COMMAND" | translate }}
+          </p>
+          <span class="medium">{{ command }}
+          </span>
+        </div>
+        <div class="description">
+          <p class="small">
+            {{ "discoveredObjects.COMMAND_OUTPUT" | translate }}
+          </p>
+          <span class="medium">{{ commandOutput }}
+          </span>
+        </div>
+        <div class="description" *ngIf="!!errorMessage">
+          <p class="small">
+            {{ "discoveredObjects.ERROR_MESSAGE" | translate }}
+          </p>
+          <span class="medium">{{ errorMessage }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>

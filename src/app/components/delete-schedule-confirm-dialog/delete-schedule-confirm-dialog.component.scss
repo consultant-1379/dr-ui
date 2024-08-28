@@ -1,0 +1,42 @@
+@import '~@erad/assets/styles/colors';
+
+.delete-schedule-confirm {
+
+  --button-primary-background: var(--erad-base-color-sharp-red, #ED0E00);
+  --button-primary-border: var(--erad-base-color-sharp-red, #ED0E00);
+  --button-primary-background-hover: var(--erad-base-color-red, #dc2d37);
+  --button-primary-border-hover: var(--erad-base-color-red, #dc2d37);
+
+  &__header {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  &__message,
+  &__job-section {
+    font-size: 14px;
+    word-wrap: break-word;
+    font-family: Hilda, Arial, Helvetica, sans-serif; // same as regular ERAD confirm dialog content
+    margin-bottom: 32px;
+  }
+
+  &__checkbox-message {
+    position: relative;
+    left: 8px;
+  }
+
+  &__delete-button {
+    margin-left: 8px;
+  }
+
+  mat-dialog-actions {
+    float: right;
+  }
+}
+
+:host ::ng-deep {
+  eui-checkbox:focus {
+    outline: none; // remove black border on checkbox "label" on focus
+  }
+}

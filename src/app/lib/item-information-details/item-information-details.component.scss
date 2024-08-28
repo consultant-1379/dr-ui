@@ -1,0 +1,68 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+
+$entity-preview-border-color: var(--dnr-entity-preview-border-color, $base-color-gainsboro-gray);
+
+#dnr-item-information-details {
+  margin: 0;
+  overflow-wrap: break-word;
+
+  .entity-details {
+    .relation {
+      border-top: 1px solid $entity-preview-border-color;
+    }
+
+    .category {
+      margin-bottom: 20px;
+    }
+  }
+
+  .characteristics {
+    margin-top: 16px;
+  }
+
+  .preview-section {
+    padding-bottom: 15px;
+  }
+
+  .application-container {
+    padding: 8px 0;
+  }
+
+  .copy-download-container {
+    position: relative;
+    top: 20px;
+  }
+
+  dnr-copy-download {
+    position: absolute;
+    right: 0;
+    padding-right: 4px; // putting in a gap on right when in an accordion header (similar to link away gap)
+  }
+
+  .objects-container {
+    padding: 8px 0;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px;
+    border-radius: 3px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+  }
+}
+
+:host ::ng-deep {
+  erad-collapsible-item.last-child .header {
+    border-bottom: 1px solid $entity-preview-border-color;
+  }
+}

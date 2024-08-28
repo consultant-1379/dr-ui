@@ -1,0 +1,138 @@
+<div
+  id="job-detail-view-container"
+  class="job-detail-view-container"
+  >
+    <erad-content-layout
+      class="jobs-component__layout"
+      content
+      [isLeftPanelShown]="isLeftPanelShown"
+      [isMainContentPanelShown]="true"
+      [isFirstRightPanelShown]="isFirstRightPanelShown">
+     <div left-panel-title>
+        {{ 'navigation.JOB_DETAILS' | translate }}
+      </div>
+      <div left-panel-sub-title *ngIf="jobInfo?.id; else jobNotExistsMessage">
+          {{ 'ID_UPPER_CASE' | translate }} - {{ jobInfo.id }}
+      </div>
+      <ng-template #jobNotExistsMessage>
+        <div class="job-not-exists-message" *ngIf="!isJobDetailsLoading">
+          {{ 'messages.JOB_NOT_FOUND_TO_DISPLAY_DETAILS_MESSAGE' | translate }}
+        </div>
+      </ng-template>
+      <div left-panel-icons>
+        <erad-action-list
+          [actions]="[]"
+        ></erad-action-list>
+        <eds-icon
+          class="icon"
+          icon="cross"
+          role="button"
+          (click)="onCloseEntityDetailButtonClicked()"
+          eradKeyboardSupport
+          (enterPressed)="onCloseEntityDetailButtonClicked()"
+        >
+        </eds-icon>
+      </div>
+      <div class="content-preview" left-panel-content>
+        <!-- used for left panel flyout of job details page -->
+        <dnr-job-details-column-container
+          *ngIf="isLeftPanelShown && jobInfo?.id"
+          [showObjectsLink]="false"
+          [skipDescription]="true"
+          [jobId]="jobInfo.id"
+          [highlightAccordionHeaders]="true"
+          (accordionHeaderClick)="onLeftAccordionHeaderClicked($event)"
+        ></dnr-job-details-column-container>
+      </div>
+
+      <!-- Main Panel -->
+        <div main-panel-title *ngIf="jobInfo?.id; else noDataMainPanelMessage">
+          <div class="main-wrapper dnr-info-heading inputs-page-title">
+            <span>{{ ('itemInformationDetails.' + accordion) | translate }}</span>
+          </div>
+
+        </div>
+        <ng-template #noDataMainPanelMessage>
+          <div class="no-data-main-panel-message">
+            {{ 'messages.NOT_FOUND_ERROR' | translate }}
+          </div>
+        </ng-template>
+      <ng-container main-panel-icons></ng-container>
+      <div main-panel-content class="content-main"  *ngIf="jobInfo?.id">
+        <dnr-general-information-main-panel
+          *ngIf="accordion === 'GENERAL_INFORMATION'"
+          [informationItems]="generalInfoMainPanel"
+        ></dnr-general-information-main-panel>
+        <dnr-discovered-objects-container
+          *ngIf="accordion === 'OBJECTS' && jobInfo?.id"
+          [job]="jobInfo"
+          (itemSelection)="onDiscoveredObjectSelection($event)"
+          (reconcileStarted)="onReloadRequested()"
+          (refreshClicked)="onReloadRequested()"
+        ></dnr-discovered-objects-container>
+        <dnr-job-inputs
+          [showColumns]="true"
+          *ngIf="accordion === 'INPUTS' && jobInfo?.id"
+          [job]="jobInfo"
+        ></dnr-job-inputs>
+      </div>
+
+        <!-- right panel -->
+        <div
+          *ngIf="isFirstRightPanelShown"
+          first-right-panel-title>
+          <span>{{ "discoveredObjects.OBJECT_DETAILS" | translate }}</span>
+        </div>
+        <div
+          *ngIf="isFirstRightPanelShown"
+          first-right-panel-sub-title>
+          <span>{{ "ID_UPPER_CASE" | translate }} {{selectedObjectDetail?.objectId}}</span>
+        </div>
+        <div first-right-panel-icons>
+          <erad-action-list
+            [actions]="[]"
+          ></erad-action-list>
+          <eds-icon
+            class="icon"
+            icon="cross"
+            role="button"
+            (click)="onCloseRightPanel()"
+            eradKeyboardSupport
+            (enterPressed)="onCloseRightPanel()"
+          >
+          </eds-icon>
+        </div>
+      <div first-right-panel-content class="panel-content object-details-section">
+          <!-- used for right panel flyout of job details page (showing filters, etc)-->
+        <dnr-item-information-details
+            *ngIf="isFirstRightPanelShown"
+            [selectableItems]="discoveredObjectsSelectableItems"
+            [copyObject]="selectedObjectDetail"
+            [itemName]="'objectId: ' + selectedObjectDetail?.objectId"
+          >
+            <dnr-general-information-main-panel
+              GENERAL_INFORMATION
+              [informationItems]="objectsGeneralInfoRightPanel"
+            ></dnr-general-information-main-panel>
+
+          <ng-container FILTER_ACTION_DETAIL>
+            <dnr-info-message  *ngIf="actionFilters.length === 0"
+                [message]="'discoveredObjects.NO_FILTERS_AVAILABLE'"
+                FILTER_ACTION_DETAIL>
+            </dnr-info-message>
+            <ng-container *ngFor="let filter of actionFilters">
+               <!-- don't show errorMessage if no errorMessage -->
+              <dnr-filter-action
+                [filterName] = "filter.name || undefinedDisplayValue"
+                [reconcileActionName] = "filter.reconcileAction?.name || undefinedDisplayValue"
+                [status] = "filter.reconcileAction?.status || undefinedDisplayValue"
+                [command] = "filter.reconcileAction?.command || undefinedDisplayValue"
+                [commandOutput] = "filter.reconcileAction?.commandOutput || undefinedDisplayValue"
+                [errorMessage] = "filter.reconcileAction?.errorMessage || null">
+              </dnr-filter-action>
+          </ng-container>
+        </ng-container>
+        </dnr-item-information-details>
+        </div>
+      </erad-content-layout>
+</div>

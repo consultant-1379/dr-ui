@@ -1,0 +1,99 @@
+<!--  The title header (its on a flyout) will be on the flyout rather than this component -->
+<ng-container>
+  <section class="form" [ngClass]="{'sidePanel': displayOrientation === verticalLayout}">
+
+    <div class="static_inputs container">
+      <div class="row">
+        <div class="form-group">
+          <label class="form-group-label">
+            {{'createSchedule.SCHEDULE_NAME' | translate}}<small class="required"> *</small>
+          </label>
+          <erad-text-input
+              id="schedule-name"
+              eradKeyboardSupport
+              ngDefaultControl
+              label="{{'ENTER_VALUE' | translate}}"
+              value={{scheduleNameValue}}
+              (change)="onScheduleNameChanged($event)"
+              [pattern]="safeStringPattern"
+              [maxLength]="maxShortCharLength"
+              [required]="true"
+              [viewStyle]="viewStyle"
+              [validationErrorMessage]="scheduleNameValue?.length === 0 ? ('INVALID_EMPTY_INPUT' | translate) : ('INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars})">
+          </erad-text-input>
+        </div>
+        <div class="form-group">
+          <label class="form-group-label">{{'createSchedule.DESCRIPTION' | translate}}</label>
+          <erad-text-input id="schedule-description"
+              ngDefaultControl
+              eradKeyboardSupport
+              label="{{'ENTER_VALUE' | translate}}"
+              value={{scheduleDescriptionValue}}
+              (change)="onScheduleDescriptionChanged($event)"
+              [maxLength]="maxLargeCharLength"
+              [multiline]="true"
+              [viewStyle]="viewStyle">
+          </erad-text-input>
+           <!-- (if undo below check multiline everywhere to remove similar
+                and add back [pattern] and [validationErrorMessage] to erad-text-input component above)
+                Seems ERAD issue validating multiline erad-text-input
+                [pattern] and [validationErrorMessage] are not working (so using below)-->
+          <div *ngIf="!isDescriptionFieldValid"
+            class="invalid-input-message">
+            {{ 'INVALID_VALUES_IN_INPUT' | translate: {chars: invalidInputChars} }}
+          </div>
+        </div>
+        <div class="form-group">
+
+          <label class="form-group-label">
+            {{'createSchedule.CRON_EXPRESSION' | translate}}<small class="required"> *</small>
+            <eui-icon aria-label="info" name="info" matTooltip="{{'createSchedule.CREATE_CRON_EXPRESSION_INFO_TOOLTIP' | translate}}"></eui-icon>
+          </label>
+
+          <erad-text-input
+              id="cron-expression"
+              eradKeyboardSupport
+              ngDefaultControl
+              label="{{'ENTER_VALUE' | translate}}"
+              value={{cronExpressionValue}}
+              (change)="onCronExpressionChanged($event)"
+              [maxLength]="maxShortCharLength"
+              [required]="true"
+              [viewStyle]="viewStyle">
+          </erad-text-input>
+          <div *ngIf="!isCronExpressionFieldValid"
+          class="invalid-input-message">{{cronErrorMessage | translate}}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="job-specification container">
+      <div class="heading"> {{"createSchedule.JOB_SPECIFICATION" | translate }}</div>
+
+      <div content class="create-schedule__content">
+        <dnr-create-job-information-form #createJobInformationForm
+          [hideCancelCreateButtons]="true">
+        </dnr-create-job-information-form>
+      </div>
+    </div>
+    <div footer class="container">
+      <div class="row footer">
+          <erad-button
+              class="cancel-button"
+              [label]="'buttons.CANCEL' | translate"
+              [mode]="buttonMode.Secondary"
+              (buttonClicked)="onCancel()">
+          </erad-button>
+          <erad-button
+              class="create-button"
+              id="create-schedule-button-submit-id"
+              [label]="'buttons.CREATE' | translate"
+              [mode]="buttonMode.Primary"
+              [disabled]="shouldDisableCreateButton()"
+              (buttonClicked)="onCreate()">
+          </erad-button>
+      </div>
+    </div>
+  </section>
+</ng-container>

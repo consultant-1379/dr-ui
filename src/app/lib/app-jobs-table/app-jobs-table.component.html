@@ -1,0 +1,96 @@
+<erad-content-layout
+  id="entity-list-view-component"
+  class="entity-list-view-component"
+  [isLeftPanelShown]="isLeftMenuShown"
+  [isMainContentPanelShown]="true"
+  [isFirstRightPanelShown]="isFirstRightPanelShown"
+>
+  <div left-panel-content>
+    <dnr-main-menu-left-panel
+      (closeButtonClicked)="onMainMenuLeftPanelCloseButtonClicked()"
+      [selected]="Jobs"
+    ></dnr-main-menu-left-panel>
+  </div>
+
+  <!-- Main Panel (containing table and action buttons) -->
+  <ng-container main-panel-title>
+    <div class="header">
+      <eds-icon
+        class="expand-button"
+        icon="search"
+        role="button"
+        (click)="onExpandMainMenuLeftPanelButtonClicked()"
+        eradKeyboardSupport
+        (enterPressed)="onExpandMainMenuLeftPanelButtonClicked()"
+      >
+      </eds-icon>
+      <div class="divider"></div>
+      <span class="title">{{ 'navigation.initials.J' | translate }}</span>
+      <span class="subtitle">{{ 'navigation.JOBS' | translate }}</span>
+    </div>
+  </ng-container>
+  <ng-container main-panel-icons>
+    <dnr-app-item-actions
+        [contextActions]="jobsTableConfig?.contextActions"
+        [iconButtonActions]="jobsTableConfig?.iconButtonActions"
+  ></dnr-app-item-actions>
+  </ng-container>
+
+  <div main-panel-content class="content-main">
+    <dnr-app-item-table-view
+      [forceReload]="forceReloadTable"
+      [actionItems]="actionItems"
+      [filter]="filter"
+      [defaultSort]="'-startDate'"
+      [entity]="Jobs"
+      [selectionType]="selectionType"
+      [searchFieldPlaceholder]="jobsTableConfig?.searchPlaceholder | translate"
+      [searchFields]="searchFieldsConfig"
+      [appItemsFacadeService]="jobsTableConfig?.facadeService"
+      [appItemDetailFacadeService]="jobsTableConfig?.facadeDetailService"
+      (tableActionClick)="onTableActionClick($event)"
+      (selectionChanged)="onSelectionChanged($event)"
+      (searchFilterChanged)="onSearchFilterChanged()"
+      #table
+    ></dnr-app-item-table-view>
+  </div>
+
+  <!-- right panel (job details or create job)-->
+  <div first-right-panel-title>
+    <span>{{ rightPanelTitle }} </span>
+  </div>
+  <div *ngIf="!isCreateJobShown"  first-right-panel-sub-title>
+    <span>{{ rightPanelSubTitle }}</span>
+  </div>
+
+  <div first-right-panel-icons>
+    <erad-action-list
+      [actions]="[]"
+    ></erad-action-list>
+    <eds-icon
+      class="icon"
+      icon="cross"
+      role="button"
+      (click)="onCloseFirstRightSidePanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseFirstRightSidePanel()"
+    >
+    </eds-icon>
+  </div>
+
+  <div class="content-preview" first-right-panel-content>
+     <!-- position sub-title when text so take 100% of available width
+      (sub title id's on their own are not split with a border - and use general info top border)-->
+    <div first-right-panel-sub-title *ngIf="isCreateJobShown" class='top-bordered-sub-title'>
+      <span>{{ rightPanelSubTitle }}</span>
+    </div>
+    <dnr-create-job-information-form
+      *ngIf="isFirstRightPanelShown && isCreateJobShown">
+    </dnr-create-job-information-form>
+
+    <dnr-job-details-column-container
+      *ngIf="selectedJobs?.length == 1 && !isCreateJobShown"
+      [jobId]="selectedJobs[0].id"
+    ></dnr-job-details-column-container>
+  </div>
+</erad-content-layout>

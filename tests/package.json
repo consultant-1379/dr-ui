@@ -1,0 +1,27 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "playwright": "npx playwright test --retries=2",
+    "docker-tests": "npx playwright test -g @docker-tests --retries=2",
+    "schedule": "npx playwright test -g @schedule --project=chromium",
+    "proxy-e2e": "npx playwright test --project=chromium --headed -g @proxy --retries=2",
+    "e2e-test": "npx playwright test -g e2e --retries=2",
+    "test-headed": "npx playwright test --project=chromium --headed",
+    "codegen": "npx playwright codegen --ignore-https-errors http://dr.docker.localhost/dr-ui/feature-packs",
+    "test-report": "npx playwright show-report",
+    "clean": "npx playwright test -g clean-data --project=chromium",
+    "clean-job": "npx playwright test -g clean-job --project=chromium",
+    "clean-fp": "npx playwright test -g clean-fp --project=chromium"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.0"
+  }
+}

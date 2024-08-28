@@ -1,0 +1,140 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@erad/assets/styles/setup-properties';
+
+@import '~@erad/assets/styles/colors';
+@import '~@erad/assets/styles/fonts';
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/material-custom-theme';
+@import '~@erad/assets/styles/reset';
+
+@import './app/styles/fonts.scss';
+@import './app/styles/theming.scss';
+@import './app/styles/custom-classes.scss';
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+  font-family: $default-font-family;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-size: $text-medium-regular;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+* CSS Used for Header Area page Entity Pages ( Job/Feature Packs)
+*/
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+}
+
+.loader-wrapper {
+  display: flex;
+  width: 100%;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-tooltip  {
+  white-space: pre-line;
+}
+
+.mat-select {
+  font-family: var(--dnr-font-default);
+}
+
+erad-search-bar {
+   // align with main title inc and separator
+  .ahead-filter {
+    position:relative;
+    right: 4px;
+  }
+  .icon-filter {
+    position:relative;
+    left: 2px;
+  }
+}
+
+// patch up style issues in current erad advance (chrome, edge)
+@supports not (-moz-appearance: none) {
+
+  .advance-search-dialog {
+
+    .mat-select-value-text {
+      position: relative;
+      top: 5px;
+      padding-left: 4px; // gap before combo-box text
+    }
+
+    // combo-box box down arrow
+    .mat-select-arrow-wrapper {
+      position: relative;
+      top: 5px;
+    }
+
+    .icon-cross-small {
+      position: relative;
+      bottom: 20px;
+    }
+
+    .mat-input-element {
+      padding-left: 4px; // gap before input text
+    }
+
+    input[type="number"]::-webkit-inner-spin-button {
+      display: none;
+    }
+    /* chrome Fallback  */
+    input[type="number"] {
+      appearance: textfield;
+      -webkit-appearance: textfield;
+    }
+  }
+}
+
+// patch up style issues in current erad advance (firefox)
+@-moz-document url-prefix() {
+
+  .advance-search-dialog {
+
+    .mat-select-value-text {
+      position: relative;
+      top: 5px;
+      padding-left: 4px; // gap before combo-box text
+    }
+
+    .icon-cross-small {
+      position: relative;
+      top: 10px;  /* different for firefox */
+    }
+
+    .mat-select-arrow-wrapper {
+      position: relative;
+      top: 5px;
+    }
+
+    .mat-input-element {
+      padding-left: 4px; // gap before input text
+    }
+
+    input[type="number"]::-webkit-inner-spin-button {
+      display: none;
+    }
+    /* firefox Fallback  */
+    input[type="number"] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+  }
+}

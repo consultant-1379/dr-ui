@@ -1,0 +1,47 @@
+
+<span class="job-details-column-container">
+
+  <div *ngIf="loading || !!failure; then showNoData; else showData"></div>
+
+  <ng-template #showNoData>
+    <div *ngIf="!!failure; then showFailure; else showLoading"></div>
+
+    <ng-template #showFailure>
+      <dnr-failure-display
+        ERROR_DETAIL
+        [failure] = "failure">
+      </dnr-failure-display>
+    </ng-template>
+
+    <ng-template #showLoading>
+      <erad-loader-animation class="loader-wrapper"></erad-loader-animation>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #showData>
+    <dnr-item-information-details
+      [copyObject]="job"
+      [itemName]="job.name"
+      [selectableItems]="selectableItems"
+      [highlightAccordionHeaders]="highlightAccordionHeaders"
+      (linkAwayClick)="onLinkAwayToDiscoveredObjects($event)"
+      (accordionHeaderClick)="onAccordionHeaderClicked($event)"
+      >
+      <dnr-job-detail-column-view
+        GENERAL_INFORMATION
+        [skipDescription]="skipDescription"
+        [job]="job">
+      </dnr-job-detail-column-view>
+      <dnr-job-inputs
+        INPUTS
+        [job]="job">
+      </dnr-job-inputs>
+      <dnr-info-message
+        *ngIf="showObjectsLink"
+        OBJECTS
+        [message]="'LAUNCH_OBJECTS_ICON_MESSAGE'">
+      </dnr-info-message>
+    </dnr-item-information-details>
+
+  </ng-template>
+</span>

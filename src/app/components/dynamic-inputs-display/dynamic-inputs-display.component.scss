@@ -1,0 +1,58 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+
+$required-color: var(--dnr-required-asterisk-color, $base-color-blue);
+
+.dynamic-inputs-display{
+
+    // Tries to match create-job-information-form.component.scss
+    // so looks ok with static two column layout
+  &__horizontal-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   // not fix same as static create job
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+
+      .form-group {
+          width: 100%;
+          padding-right: 20px;
+          display: flex;
+          flex-direction: column;
+
+          label {
+              &.form-group-label {
+                  padding: 10px 0;
+              }
+          }
+      }
+  }
+  }
+
+  .form-group{
+    margin-bottom: 20px;  // room for validation error message
+  }
+
+  .required {
+    color: $required-color;
+  }
+
+  eui-icon{
+    padding: 0 8px;
+  }
+
+  label {
+    display: block;
+    padding: 5px 0;
+  }
+
+  :host ::ng-deep {
+    erad-text-input .erad-bordered-text-input,
+    erad-dropdown .erad-bordered-dropdown {
+        border-radius: 3px;
+    }
+  }
+}

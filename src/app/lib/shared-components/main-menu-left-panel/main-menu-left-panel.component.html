@@ -1,0 +1,11 @@
+<div class="main-menu-left-panel">
+  <erad-side-menu-list-v2
+    (itemCardClicked)="onSelection($event)"
+    (closeButtonClicked)="onCloseButtonClicked()"
+    [items]="items"
+    eradKeyboardSupport
+    (enterPressed)="onEnterPressed()"
+    (activeListChanged)="onActiveListChanged($event)"
+    class="shared-main-menu-left-panel">
+  </erad-side-menu-list-v2>
+</div>

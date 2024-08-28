@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "eric-esoa-dr-ui.name" . }}-bam-config
+  labels:
+    {{- include "eric-esoa-dr-ui.labels" . | nindent 4 }}
+  annotations:
+    {{- include "eric-esoa-dr-ui.annotations" . | nindent 4 }}
+data:
+  config.json: |-
+    {
+        "version": "1.0.0",
+        "apps": [
+            {
+                "name": "discoveryAndReconciliation",
+                "displayName": "Discovery and Reconciliation",
+                "descriptionShort": "Network service discovery and reconciliation",
+                "version": "0.1.0",
+                "type": "external",
+                "url": "/dr-ui/",
+                "priority": 10,
+                "groupNames": [
+                    "esoaOperations"
+                ],
+                "tags": ["esoa"]
+            }
+        ],
+        "groups": [
+            {
+                "name": "esoaOperations",
+                "displayName": "ESOA Operations",
+                "version": "0.1.0",
+                "type": "domain",
+                "priority": 10,
+                "tags": ["esoa"]
+            }
+        ],
+        "components": [
+        ]
+    }

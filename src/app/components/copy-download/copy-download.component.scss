@@ -1,0 +1,13 @@
+.copy-download {
+
+  display: flex;
+  align-items: center;
+
+  eui-icon[name='copy'], eui-icon[name='download-save'] {
+    cursor: pointer;
+  }
+
+  eui-tooltip:not(:last-child) {
+    margin-right: 8px; /* Space between icons */
+  }
+}

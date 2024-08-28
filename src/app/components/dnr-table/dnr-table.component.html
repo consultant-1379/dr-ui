@@ -1,0 +1,28 @@
+<div class="dnr-table-container">
+  <div class="inline-failure-message" *ngIf="!!failure">
+    <div class="failure-container">
+      <eui-tooltip message="{{'RELOAD_TABLE' | translate}}">
+        <eui-icon name="reload"
+          class="icon-alignment"
+          (click)="onReloadTableOnFail()">
+        </eui-icon>
+      </eui-tooltip>
+      <dnr-failure-display
+        [failure]="failure">
+      </dnr-failure-display>
+    </div>
+  </div>
+  <div class="empty-table-message" id="empty-table-msg-id" *ngIf="!failure && showEmptyMessage && !!emptyTableMessage">
+    <div class="empty-container">
+      <eui-tooltip message="{{'RELOAD_TABLE' | translate}}">
+        <eui-icon name="reload" class="icon-alignment" (click)="onRefresh()">
+        </eui-icon>
+      </eui-tooltip>
+      <eui-icon name="info" class="icon-alignment"></eui-icon>
+      <span class="empty-text"> {{emptyTableMessage | translate}}</span>
+    </div>
+    </div>
+  <div #ListViewTable
+      [ngClass]="getTableClassName()">
+  </div>
+</div>

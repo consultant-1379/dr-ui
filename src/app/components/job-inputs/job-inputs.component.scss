@@ -1,0 +1,35 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+.job-inputs-main-panel{
+  padding-bottom: 10px;
+  margin-left: 8px;
+
+    .show-columns {
+      display: grid;
+      grid-template-columns: 130px auto;
+    }
+
+    .general-info-box {
+      padding: 7px 0;
+      line-height: 1.5em;
+
+      .input-header {
+        margin: 0;
+        color: var(--erad-base-color-dim-gray, #6a6a6a);
+      }
+
+      .text-medium {
+        font-size: $text-medium-regular;
+      }
+
+      .text-regular {
+        font-size: $text-regular;
+      }
+
+      .input-value {
+        color: var(--erad-base-color-black, #242424);
+        font-size: $text-regular;
+      }
+    }
+  }

@@ -1,0 +1,54 @@
+@import '@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+
+$required-color: var(--dnr-required-asterisk-color, $base-color-blue);
+
+.install-feature-pack {
+  &__drop-area-holder {
+    height:200px;
+  }
+
+  &__form_group{
+    padding-bottom: 16px;
+  }
+
+  &__action-buttons-holder {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+
+  &__submit-action-button {
+    padding-left: 1em;
+  }
+
+  &__disabled-text {
+    opacity: 0.5;
+  }
+
+  &__invalid-input-message{
+    color: var(--erad-base-color-red, #dc2d37);
+    font-size: 0.9rem;
+  }
+
+  &__cross-close-icon {
+    cursor: pointer;
+    float: right;
+    z-index: 1000;
+  }
+
+  mat-dialog-content{
+    font-size: $text-regular-medium;
+  }
+
+  .required {
+    color: $required-color;
+  }
+}
+
+:host ::ng-deep {
+  .erad-file-upload-container {
+    border-color: #878787 !important;  /* UX requirement */
+  }
+}
+

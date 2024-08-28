@@ -1,0 +1,21 @@
+<div class="failure-display">
+
+  <div *ngIf="failure?.errorCode">
+    <span *ngIf="failure?.errorMessage" class="failure-display__icon">
+      <eui-icon name="cross" color="red"></eui-icon>
+    </span>
+    <span class="failure-display__error-code-title">
+      {{ "ERROR_CODE" | translate }}: {{failure?.errorCode}}
+    </span>
+  </div>
+
+  <div *ngIf="failure?.errorMessage">
+    <span *ngIf="!failure?.errorCode" class="failure-display__icon">
+      <eui-icon name="cross" color="red"></eui-icon>
+    </span>
+
+    <span [ngClass] = "{'failure-display__error-code-message': !!failure?.errorCode, 'failure-display__error-code-message-no-error-code': !failure?.errorCode}">
+          {{failure?.errorMessage}}
+    </span>
+  </div>
+</div>

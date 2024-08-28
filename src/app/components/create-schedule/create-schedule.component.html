@@ -1,0 +1,14 @@
+<div class="create-schedule">
+  <div [eradLoader]="createScheduleLoading"></div>
+  <erad-layout>
+    <div header class="create-shedule__header">
+      <div class="create-schedule__title"> {{"createSchedule.TITLE" | translate }}</div>
+      <div class="create-schedule__subtitle"> {{"createSchedule.SUBTITLE_TWO_COLUMNS" | translate }}</div>
+    </div>
+    <div content class="create-schedule__content">
+      <dnr-create-schedule-form
+        [displayOrientation]="displayOrientation"
+      ></dnr-create-schedule-form>
+    </div>
+  </erad-layout>
+</div>

@@ -1,0 +1,169 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+$app-page-table-content-background-color: var(--feature-layout-background);
+$app-page-table-border-color: var(--app-page-table-border-color,
+        $border-color-light);
+
+$app-page-table-header-title-color: var(--app-page-table-header-title-color,
+        $base-color-black);
+$app-page-table-header-title-font-size: var(--app-page-table-header-title-font-size,
+        $text-large);
+$app-page-table-header-subtitle-color: var(--app-page-table-header-subtitle-color,
+        $base-color-dim-gray);
+$app-page-table-bar-bg-color: var(--app-page-table-bar-bg-color,
+        $base-color-white);
+$app-page-table-bar-border-color: var(--app-page-table-bar-border-color,
+        $base-color-gray-87);
+
+$app-page-table-bar-height: var(--app-page-table-bar-height, 32px);
+$app-page-table-bar-max-width: var(--app-page-table-bar-max-width, 700px);
+$app-page-table-right-panel-max-width: var(--app-page-table-right-panel-max-width,
+        368px);
+
+:host ::ng-deep {
+    .header .expand-button .icon-search {
+        color: $base-color-black;
+    }
+
+    .content-main {
+        box-sizing: border-box;
+    }
+
+    .header {
+        .expand-button {
+            padding: 4px 4px 4px 0px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .title {
+            padding-left: 4px;
+            color: $app-page-table-header-title-color;
+            font-size: $app-page-table-header-title-font-size;
+        }
+
+        .subtitle {
+            font-size: $text-regular;
+            padding-left: 4px;
+            color: $app-page-table-header-subtitle-color;
+        }
+
+        .divider {
+            margin-left: 2px;
+            margin-right: 2px;
+            height: 16px;
+            width: 1px;
+            display: inline-block;
+            background-color: $app-page-table-border-color;
+        }
+    }
+
+    .create-item-button {
+        cursor: pointer;
+        display: flex;
+
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .entity-search-bar {
+        display: block;
+        margin: 8px 0 0 0;
+    }
+
+    erad-search-bar {
+        .search-bar {
+            height: $app-page-table-bar-height;
+            max-width: $app-page-table-bar-max-width;
+            background-color: $app-page-table-bar-bg-color !important;
+            border: 1px solid $app-page-table-bar-border-color;
+
+            .ft-search-bar {
+                margin-top: 8px;
+                margin-left: 8px;
+            }
+
+            .search-button {
+                display: none;
+            }
+        }
+    }
+
+    erad-content-layout {
+        display: block;
+        background-color: var(--feature-layout-background);
+        /* same as margins in jobs and feature pack details and tab navigation */
+        margin: 0rem 2rem;
+        height: 85vh;
+
+        .content-layout-wrapper {
+            .title {
+                font-style: medium;
+                color: $app-page-table-header-title-color !important;
+            }
+
+            .sub-title {
+                color: $app-page-table-header-title-color !important;
+            }
+
+            .content-wrapper {
+                overflow-y: auto !important; // not scrolls as default (shows in firefox)
+                padding-left: 10px;
+                background-color: $app-page-table-content-background-color;
+
+                &.left-border {
+                    min-width: auto !important;
+                }
+
+                &.right-border {
+                    padding: 0 !important;
+                    @extend .left-border;
+                }
+            }
+        }
+
+        .content-wrapper:has(.content-right) {
+            max-width: $app-page-table-right-panel-max-width;
+        }
+
+        .second-right-panel-icons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .content-preview {
+            margin-top: 16px;
+
+            &.withoutSubTitle {
+                margin-top: 32px;
+                border-top: 1px solid var(--dnr-entity-preview-border-color, var(--erad-base-color-gainsboro-gray, #dcdcdc));
+            }
+        }
+
+        div[first-right-panel-icons] {
+            display: contents;
+        }
+
+        .inline-failure-message,
+        .empty-table-message {
+            padding-top: 16px;
+        }
+    }
+
+    erad-info-popup {
+        cursor: pointer;
+
+        &.disabled {
+            pointer-events: none;
+            cursor: none;
+        }
+    }
+
+}

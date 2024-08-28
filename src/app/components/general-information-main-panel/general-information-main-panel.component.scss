@@ -1,0 +1,47 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+.general-information-main-panel{
+  margin-left: 8px;  /* caution component used on left panel and in right panel */
+
+  .general-information {
+    padding-bottom: 10px;
+
+    .general-info-box {
+      font-size: $text-regular;
+      padding: 7px 0;
+
+      .small {
+        font-size: $text-medium-regular;
+        margin: 0;
+        color: var(--erad-base-color-dim-gray, #6a6a6a);
+        line-height: 1.5em;
+      }
+
+      .item-value {
+        display: flex;
+        align-items: center;
+
+        .medium {
+          font-size: $text-regular;
+          color: var(--erad-base-color-black, #242424);
+          line-height: 1.5em;
+        }
+
+        .hyperlink {
+          cursor: pointer;
+          color: var(--dnr-list-view-table-id-color, #0069C2);
+        }
+
+        .bold {
+          font-weight: bold;
+        }
+
+        eui-icon {
+          margin-left: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+<div class="job-inputs-main-panel">
+
+  <div *ngIf="loading || !!failure; then showNoData; else showData"></div>
+
+  <ng-template #showNoData>
+
+    <div *ngIf="!!failure; then showFailure; else showLoading"></div>
+
+    <ng-template #showFailure>
+      <dnr-failure-display
+        [failure] = "failure">
+      </dnr-failure-display>
+    </ng-template>
+
+    <ng-template #showLoading>
+      <erad-loader-animation></erad-loader-animation>
+    </ng-template>
+
+  </ng-template>
+
+  <ng-template #showData>
+
+    <div *ngIf="inputsFound; then showInputs; else showNoInputs"></div>
+
+    <ng-template #showNoInputs>
+      <dnr-info-message [message]="'inputs.NO_INPUTS'"></dnr-info-message>
+    </ng-template>
+
+    <ng-template #showInputs>
+      <div class="general-info-box" [class.show-columns]="showColumns" *ngIf="discoveryInputs?.length > 0">
+        <div
+          class="input-header"
+          [ngClass]="{'text-regular': showColumns, 'text-medium': !showColumns}"
+        >{{ "inputs.JOB_INPUTS" | translate }}</div>
+        <div class="column">
+          <div class="input-value column" *ngFor="let input of discoveryInputs">
+            {{ input }}
+          </div>
+        </div>
+      </div>
+
+      <div class="general-info-box" [class.show-columns]="showColumns" *ngIf="reconcileInputs?.length > 0">
+        <div
+          class="input-header"
+          [ngClass]="{'text-regular': showColumns, 'text-medium': !showColumns}"
+        >{{ "inputs.RECONCILE_INPUTS" | translate }}</div>
+        <div class="column">
+          <div class="input-value column" *ngFor="let input of reconcileInputs">
+            {{ input }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>

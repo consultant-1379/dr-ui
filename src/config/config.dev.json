@@ -1,0 +1,18 @@
+{
+  "api": {
+    "context": "discovery-and-reconciliation"
+  },
+  "defaultTheme": "ericsson-dark",
+  "i18n": {
+    "defaultLang": "en-US",
+    "supportedLangs": ["en-US", "es-ES"]
+  },
+  "runtimeProperties": {
+    "ignoredUrlForNotification": [],
+    "version": "0.0.0",
+    "groupClaim": "groups",
+    "maxNavigationTabs": 20,
+    "privacyPolicy": "https://www.ericsson.com/en/legal/privacy",
+    "termsOfService": "https://www.ericsson.com/en/legal"
+  }
+}

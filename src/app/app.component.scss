@@ -1,0 +1,109 @@
+@import '~@erad/assets/styles/_typography';
+@import '~@erad/assets/styles/_colors';
+
+$app-ui-container-background-color: var(--dnr-app-ui-container-background-color, $base-color-gray-light);
+
+$top-bar-height: 48px;
+
+erad-app-switcher { // holds page content in place when use pagination dropdown
+  position: fixed;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app-content {
+  box-sizing: border-box;
+  height: calc(100% - #{$top-bar-height});
+}
+
+.app-content-full {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.app-route-content {
+  padding: 5px 30px;
+}
+
+.drawer-left {
+  width: 200px;
+  height: 100%;
+}
+
+.drawer-right {
+  width: 341px;
+  height: 100%;
+}
+
+.dnr-ui-app-container {
+  height: 100%;
+  background-color: $app-ui-container-background-color;
+}
+
+.dnr-ui-app-container__system-bar-actions {
+  display: flex;
+  align-items: center;
+
+  .system-bar-action {
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+  }
+
+  .user-profile {
+    display: flex;
+
+    .user-profile-icon {
+      padding-right: 7px;
+      font-size: 18px;
+    }
+  }
+}
+
+.dnr-ui-app-container__breadcrumb{
+  position: relative;
+  left: 36px;
+  bottom: 8px;
+}
+
+.dnr-ui-app-container__breadcrumb-menu-toggle-container{
+  position: relative;
+  top:16px;
+}
+
+.centered-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 90%;  // give access to the drawer with signout option
+  height: 100%;
+
+}
+
+.no-authority-message-holder {
+  background-color: var(--erad-base-color-gray-light, #f2f2f2); /* Background color of the info-message holder */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/***
+* Added Customized Style as per New UX
+* https://xd.adobe.com/view/8137b0a2-fae6-4890-a31b-fb77c1505020-d464/screen/0194c25d-1371-4398-8970-cfdc872aa32a
+*/
+:host ::ng-deep {
+  erad-menu-toggle-container {
+    eds-icon {
+      visibility: hidden;
+    }
+  }
+
+  erad-application-layout .system-bar-name {
+    cursor: pointer;
+  }
+}

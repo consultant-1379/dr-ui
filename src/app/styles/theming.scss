@@ -1,0 +1,70 @@
+html {
+  --dnr-font-default: var(--app-font-default);  // see themes.json
+  --dnr-required-asterisk-color: var(--required-asterisk-color);
+}
+
+.dnr-ui-app-container {
+  // General
+  --dnr-form-field-label-color: var(--app-label-color);
+  --dnr-form-field-primary-border: var(--field-primary-border);
+  --erad-components-application-layout-content-background-color: var(--app-background);
+  --erad-components-loader-animation-dot-background-color: var(--app-dot-loading-color);
+  --header-icon-filter: var(--icon-filter);
+
+  // System Toolbar
+  --erad-components-system-bar-background-color: var(--toolbar-system-background);
+
+  // Header Toolbar
+  --erad-components-toolbar-background-color: var(--toolbar-header-background);
+  --erad-components-toolbar-text-color: var(--toolbar-header-text);
+  --erad-application-layer-header-text-color: var(--app-text-color);
+  --erad-application-layer-header-icon-color: var(--app-icon-color);
+  --erad-components-navigation-menu-header-icon-color: var(--app-icon-color);
+
+  // Menu
+  --erad-components-application-layout-drawer-left-background-color: var(--menu-background);
+  --erad-components-navigation-menu-header-background-color: var(--menu-background);
+  --erad-components-navigation-menu-header-text-color: var(--menu-text-color);
+  --erad-components-navigation-menu-background-color: var(--menu-background);
+  --erad-components-navigation-menu-active-background-color: var(--menu-item-background-active);
+  --erad-components-navigation-menu-nested-item-color: var(--app-text-color);
+  --erad-components-navigation-menu-item-color: var(--menu-text-color);
+  --erad-components-navigation-menu-hover-color: var(--menu-item-background-hover);
+
+  // Right Panel
+  --erad-components-application-layout-drawer-right-background-color: var(--profile-bar-background);
+  --erad-components-application-layout-drawer-right-text-color: var(--app-text-color);
+  --erad-components-user-profile-text-color: var(--menu-text-color);
+  --erad-components-user-profile-version-border-color: var(--profile-line-color);
+  --erad-components-dropdown-mat-select-value-color: var(--app-text-color);
+  --erad-components-mat-form-field-label-color: var(--app-label-color);
+
+  // Dashboard Screen
+  --dnr-dashboard-container-grid-div-background-color: var(--app-background-box);
+  --dnr-dashboard-container-grid-div-text-color: var(--app-text-color);
+
+  // Accordion
+  --erad-components-accordion-header-text-color: var(--app-text-color);
+  --erad-components-accordion-header-background-hover-color: var(--menu-item-background-hover);
+
+  // Action Button and Action List
+  --erad-components-action-item-text-color: var(--app-action-primary-text-color);
+  --erad-components-action-item-icon-color: var(--app-action-primary-text-color);
+  --erad-components-action-list-menu-icon-color: var(--app-text-color);
+
+  // Line Separator
+  --erad-components-card-separator-background-color: var(--app-line-color);
+
+  // Scrollbar
+  --dnr-scrollbar-track-background: var(--scrollbar-track-background);
+  --dnr-scrollbar-thumb-background: var(--scrollbar-thumb-background);
+  --dnr-scrollbar-thumb-background-hover: var(--scrollbar-thumb-background-hover);
+
+  // Card
+  --erad-components-card-background-color: var(--card-background);
+  --erad-components-card-hover-color: var(--card-background-hover);
+  --dnr-card-item-mat-card-shadow: var(--card-shadow);
+
+  // Date Picker
+  --erad-components-date-picker-underline-focus-color: var(--input-focus-background);
+}

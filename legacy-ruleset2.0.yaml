@@ -1,0 +1,317 @@
+---
+modelVersion: 2
+description: BSS PDU D&R User Interface Microservice
+docker-images:
+  - adp-release-auto: armdocker.rnd.ericsson.se/proj-adp-cicd-drop/bob-adp-release-auto:latest
+  - adp-helm-dr-check: armdocker.rnd.ericsson.se/sandbox/adp-staging/adp-cicd/common-library-adp-helm-dr-check:latest
+  - hadolint-scan: armdocker.rnd.ericsson.se/proj-adp-cicd-drop/hadolint-scan:${env.HADOLINT_TAG}
+  - trivy-inline-scan: armdocker.rnd.ericsson.se/proj-adp-cicd-drop/trivy-inline-scan:${env.TRIVY_TAG}
+  - grype-scan: armdocker.rnd.ericsson.se/proj-adp-cicd-drop/va-image-scanning-grype:${env.ANCHORE_TAG}
+  - adp-maven-builder_java17: armdocker.rnd.ericsson.se/proj-adp-cicd-drop/bob-java17mvnbuilder:latest
+
+
+properties:
+  # uService details
+  - product-id: eric-esoa-dr-ui
+  - product-name: "D&R GUI"
+  - product-description: "GUI for D&R"
+
+  - image-docker-file-dir: .
+  - image-name: eric-esoa-dr-ui
+  - image-registry: armdocker.rnd.ericsson.se
+  - image-dev-repopath: proj-eric-bos-esoa-dev
+  - image-release-repopath: proj-eric-bos-esoa-drop
+  - helm-chart-repo-server: https://arm.seli.gic.ericsson.se/artifactory
+  - helm-chart-repo-path: proj-eric-bos-esoa-drop-helm
+  - helm-chart-repo: ${helm-chart-repo-server}/${helm-chart-repo-path}
+  - helm-chart-name: eric-esoa-dr-ui
+  - helm-chart-repo-api-token: AKCp5dKspy6qdk8sBzXNwPn4UWrJNmNbG6VzwZTZpT2vCCwcRetKj7fuzpAa6RYczigYrfjVv
+  - skipped-design-rules: -DhelmDesignRule.config.DR-D470217-001=skip
+      -DhelmDesignRule.config.DR-D1120-045=skip
+      -DhelmDesignRule.config.DR-D1120-061=skip
+      -DhelmDesignRule.config.DR-D1121-011=skip
+      -DhelmDesignRule.config.DR-D1121-060=skip
+      -DhelmDesignRule.config.DR-D1121-067=skip
+      -DhelmDesignRule.config.DR-D1121-106=skip
+      -DhelmDesignRule.config.DR-D1121-120=skip
+      -DhelmDesignRule.config.DR-D1121-122=skip
+      -DhelmDesignRule.config.DR-D1123-127=skip
+      -DhelmDesignRule.config.DR-D1123-128=skip
+
+  - git-user: esoadm100
+  - git-repo-path: ESOA/DR-Parent/com.ericsson.bos.dr/dr-ui
+  - git-repo-url: ssh://${git-user}@gerrit-gamma-gic.ericsson.se:29418/${git-repo-path}
+
+  # FOSSA
+  - fossa-server-endpoint: https://scasfossa.internal.ericsson.com/
+  - fossa-report-name: fossa-report.json
+  - dependency-file-name: dependency.yaml
+  - fossa-team-name: orchestration-so-improvisers
+
+var:
+  - version
+  - image-full-name
+  - artifactory-subpath
+  - resultcode_hadolint_check
+  - xray-report
+  - product-name
+  - product-description
+  - artifact-name
+  - pom-name
+
+env:
+  - PWD
+  - HOME
+  - GERRIT_CHANGE_OWNER_NAME (default="esoadm100")
+  - GERRIT_CHANGE_OWNER_EMAIL (default="youremail@email.com")
+  - GERRIT_CHANGE_URL (default="https://gerrit-gamma.gic.ericsson.se")
+  - GERRIT_EVENT_ACCOUNT_NAME (default="esoadm100")
+  - GERRIT_EVENT_ACCOUNT_EMAIL (default="youremail@email.com")
+  - GERRIT_PATCHSET_REVISION (default="e98f87d6fb62d1b86f4e63c7a79c663980dfb6f5")
+  - GERRIT_PROJECT (default="ESOA/DR-Parent/com.ericsson.bos.dr/dr-ui")
+  - JOB_NAME (default="dr-ui-release")
+  - GERRIT_BRANCH (default="origin/master")
+  - RSTATE (default="R10A")
+  - HADOLINT_TAG (default=latest)
+  - TRIVY_TAG (default=latest)
+  - ANCHORE_TAG (default=latest)
+  - XRAY_APIKEY
+  - ARM_USR (default="amadm100")
+  - ARM_PSW (default="3Af3daHihNurm*yP")
+  - EXCLUDE_PATH(default=./so-ci)
+  - DOCKER_NETWORK (default=--network host)
+
+  # Malware
+  - MALWARE_API_KEY
+
+  # FOSSA
+  - FOSSA_API_KEY
+  - FOSSA_PREFIX(default=)
+
+  # Docker
+  - DOCKERFILE (default=${env.PWD}/Dockerfile)
+  - IMAGE_NAME (default=)
+
+rules:
+  clean:
+    - task: rm
+      cmd:
+        - rm -rf .bob/
+        - rm -rf .scannerwork/
+        - rm -rf .sonar/
+        - rm -rf build/
+        - rm -f artifact.properties
+        - rm -rf target/
+        - rm -rf dist/
+
+  init-common:
+    - task: project-name
+      cmd: echo -n "${product-id}" > .bob/var.artifact-name
+    - task: get-product-name
+      cmd: echo -n "${product-name}" > .bob/var.product-name
+    - task: get-product-description
+      cmd: echo -n "${product-description}" > .bob/var.product-description
+    - task: check-product-details-value
+      cmd:
+        - if grep -q null .bob/var.product-description; then
+          echo "Not Available" > .bob/var.product-description;
+          fi
+        - if grep -q null .bob/var.product-name; then
+          echo "Not Available" > .bob/var.product-name;
+          fi
+
+  init-review:
+    - rule: init-common
+    - task: version
+      docker-image: adp-release-auto
+      cmd: generate-version --is-release false --output version
+    - task: image-full-name
+      cmd: echo "${image-registry}/${image-dev-repopath}/${image-name}" >
+        .bob/var.image-full-name
+    - task: set-artifactory-subpath
+      cmd: echo "${image-dev-repopath}" > .bob/var.artifactory-subpath
+    - task: set-xray-config-file
+      cmd: echo "xray_report_snapshot.config" > .bob/var.xray-report
+
+  init-release:
+    - rule: init-common
+    - task: version
+      docker-image: adp-release-auto
+      cmd: generate-version --is-release true --output version
+    - task: image-full-name
+      cmd: echo "${image-registry}/${image-release-repopath}/${image-name}" >
+        .bob/var.image-full-name
+    - task: set-artifactory-subpath
+      cmd: echo "${image-release-repopath}" > .bob/var.artifactory-subpath
+    - task: adp-artifacts-properties
+      docker-image: adp-release-auto
+      cmd:
+        generate-adp-artifacts --chart-name ${helm-chart-name} --chart-version
+        ${var.version} --chart-repo ${helm-chart-repo} --image-name
+        ${image-name} --image-version ${var.version} --image-repo
+        "${image-registry}/${image-release-repopath}"
+    - task: add-change-info
+      cmd:
+        - echo "CHANGE_OWNER_NAME=${env.GERRIT_CHANGE_OWNER_NAME}" >> artifact.properties
+        - echo "CHANGE_OWNER_EMAIL=${env.GERRIT_CHANGE_OWNER_EMAIL}" >> artifact.properties
+        - echo "CHANGE_URL=${env.GERRIT_CHANGE_URL}" >> artifact.properties
+        - echo "COMMIT_ID=${env.GERRIT_PATCHSET_REVISION}" >> artifact.properties
+        - echo "BRANCH_NAME=${env.GERRIT_BRANCH}" >> artifact.properties
+    - task: set-xray-config-file
+      cmd: echo "xray_report_release.config" > .bob/var.xray-report
+
+  chart-dependency-update:
+    - task: dependency-update
+      docker-image: adp-release-auto
+      docker-flags:
+        - ${env.DOCKER_NETWORK}
+      cmd: helm dependency update charts/${helm-chart-name}
+
+  lint-helm:
+    - task: helm
+      docker-image: adp-release-auto
+      cmd: helm lint charts/${helm-chart-name}
+    - task: helm-chart-check
+      docker-image: adp-helm-dr-check
+      cmd: helm-dr-check --helm-chart charts/${helm-chart-name}
+        ${skipped-design-rules} --helm-v3 --output  .bob/
+
+  image:
+    - task: docker-build
+      cmd:
+        docker build ${env.PWD} --file ${image-docker-file-dir}/Dockerfile --tag
+        ${var.image-full-name}:${var.version} --build-arg
+        version=${var.version} --build-arg rstate=${env.RSTATE} --build-arg
+        imagedate=$(date -u +"%Y-%m-%dT%T%Z")
+
+  package:
+    - task: package-helm-internal
+      docker-image: adp-release-auto
+      cmd:
+        helm-package --folder charts/${helm-chart-name} --workdir .bob --output
+        .bob/${helm-chart-name}-internal --version ${var.version}
+        --replace VERSION=${var.version}
+        --replace REPOPATH=${var.artifactory-subpath}
+        --replace eric-product-info.yaml:IMAGE_TAG=${var.version}
+        --replace eric-product-info.yaml:REPO_PATH=${var.artifactory-subpath}
+
+  publish:
+    - task: docker-push
+      cmd: docker push ${var.image-full-name}:${var.version}
+    - task: helm-upload
+      docker-image: adp-release-auto
+      cmd: upload_file.sh
+        --filename=.bob/${helm-chart-name}-internal/${helm-chart-name}-${var.version}.tgz
+        --repository=${helm-chart-repo}/${helm-chart-name}
+        --api-token=${helm-chart-repo-api-token}
+    - task: git-tag
+      cmd:
+        - git tag -af ${var.version} -m "Release ${var.version}"
+        - git remote set-url origin ${git-repo-url}
+        - git push origin ${var.version} || true
+
+  malware-scan-snapshot:
+    - task: malware-scan-test
+      docker-image: adp-release-auto
+      docker-flags:
+        - "--env MALWARE_API_KEY=${env.MALWARE_API_KEY}"
+      cmd:
+        - mkdir -p build/va-reports/malware-scan
+        - chmod 777 ./scripts/malware-scan.sh
+        - ./scripts/malware-scan.sh ${env.MALWARE_API_KEY} snapshot ${var.artifact-name} ${var.version}
+
+  malware-scan-release:
+    - task: malware-scan-test
+      docker-image: adp-release-auto
+      docker-flags:
+        - "--env MALWARE_API_KEY=${env.MALWARE_API_KEY}"
+      cmd:
+        - mkdir -p build/va-reports/malware-scan
+        - chmod 777 ./scripts/malware-scan.sh
+        - ./scripts/malware-scan.sh ${env.MALWARE_API_KEY} release ${var.artifact-name} ${var.version}
+
+  hadolint-scan:
+    - task: hadolint-scan-test
+      docker-image: hadolint-scan
+      docker-flags:
+        - "--workdir /app/"
+        - "-v ${env.PWD}/config/hadolint_config.yaml:/config/hadolint_config.yaml"
+        - "-v ${env.DOCKERFILE}:/Dockerfile"
+        - "-v ${env.PWD}/build/va-reports/hadolint-scan:/tmp/reports/"
+      cmd: "-p ${var.image-full-name} -f /Dockerfile -c ${env.PWD}/config/hadolint_config.yaml; echo $? > .bob/var.resultcode_hadolint_check"
+
+  trivy-inline-scan:
+    - task: fetch-image
+      cmd:
+        - "docker pull ${var.image-full-name}:${var.version}"
+        - mkdir -p build/va-reports/trivy-reports
+    - task: trivy-inline-scan-console-report
+      docker-image: trivy-inline-scan
+      docker-in-docker: socket
+      cmd: --offline-scan --timeout 30m ${var.image-full-name}:${var.version}
+    - task: trivy-inline-scan-json-report
+      docker-image: trivy-inline-scan
+      docker-in-docker: socket
+      cmd: --format json --output build/va-reports/trivy-reports/trivy.report.json --offline-scan --timeout 30m ${var.image-full-name}:${var.version}
+
+  anchore-grype-scan:
+    - task: fetch-image
+      cmd: "docker pull ${var.image-full-name}:${var.version}"
+    - task: anchore-grype-scan
+      docker-image: grype-scan
+      docker-in-docker: socket
+      cmd: grype_scan
+        --image ${var.image-full-name}:${var.version}
+        --report-dir build/va-reports/anchore-reports
+
+  fetch-xray-report:
+    - task: fetch-xray-report
+      docker-image: adp-release-auto
+      cmd: bash -c 'fetch-xray
+        --config ${env.PWD}/config/${var.xray-report}
+        --debug
+        --user esoadm100
+        --apikey ${env.XRAY_APIKEY}
+        --output ${env.PWD}/build/va-reports/xray-reports/xray_report.json
+        --set artifactory-subpath=${var.artifactory-subpath}
+        --set image=${var.artifact-name}
+        --set version=${var.version}
+        --raw-output ${env.PWD}/build/va-reports/xray-reports/raw_xray_report.json'
+
+  evaluate-design-rule-check-resultcodes:
+    - task: hadolint-result-check
+      cmd: sh -c '
+        if [ ${var.resultcode_hadolint_check} -ne 0 ]; then
+        echo "Failure in hadolint checker";
+        exit ${var.resultcode_hadolint_check};
+        fi ;'
+
+  # Fetch vulnerabililty report VA 2.0
+  generate-VA-report-V2:
+    - task: no-upload
+      docker-image: adp-release-auto
+      cmd: bash -c 'va-report
+        --set version=${var.version}
+        --set image=${var.artifact-name}
+        --set product-name="${var.product-name}"
+        --set product-description="${var.product-description}"
+        --set project-name=${var.artifactory-subpath}
+        --config ${env.PWD}/config/va_report.config
+        --output ${env.PWD}/build/va-reports/Vulnerability_Report_2.0.md
+        --md
+        --debug
+        --trivy-reports ${env.PWD}/build/va-reports/trivy-reports
+    - task: upload
+      docker-image: adp-release-auto
+      cmd: bash -c 'va-report
+        --set version=${var.version}
+        --set image=${var.artifact-name}
+        --set product-name="${var.product-name}"
+        --set product-description="${var.product-description}"
+        --set project-name=${var.artifactory-subpath}
+        --config ${env.PWD}/config/va_report.config
+        --output ${env.PWD}/build/va-reports/Vulnerability_Report_2.0.md
+        --md
+        --debug
+        --trivy-reports ${env.PWD}/build/va-reports/trivy-reports
+        --upload-scan-results'; exit 0;

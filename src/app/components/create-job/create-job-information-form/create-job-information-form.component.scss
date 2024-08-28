@@ -1,0 +1,115 @@
+@import '~@erad/assets/styles/typography';
+@import '~@erad/assets/styles/colors';
+$required-color: var(--dnr-required-asterisk-color, $base-color-blue);
+
+section {
+    &.form {
+        &.sidePanel {
+            .reconcile-select {
+              display: flex;
+            }
+            .reconcile-text {
+              margin: 6px;
+            }
+            .container {
+                width: 100%;
+
+                .row {
+                    display: block;
+                    padding: 0;
+
+                    .form-group {
+                        padding-top: 8px;
+                        margin-bottom: 10px; // space for validation error message
+
+                        label {
+                            &.form-group-label {
+                                padding: 5px 0;
+                            }
+                        }
+                    }
+                    &.footer {
+                        display: flex;
+                        width: auto;
+                        position: relative;
+                        bottom: 0;
+                        top: 20px;
+                    }
+                }
+
+                .heading {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        width: 100%;
+
+        .container {
+            width: 70%;
+
+            .row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px 0;
+
+                .form-group {
+                    width: 100%;
+                    padding-right: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+
+                    label {
+                        &.form-group-label {
+                            padding: 10px 0;
+                        }
+                        &.form-group-value {
+                          font-size: $text-regular;
+                        }
+                    }
+                }
+
+                &.footer {
+                    position: fixed;
+                    bottom: 20px;
+                    width: inherit;
+                    border-top: 1px solid;
+                    padding: 10px 0;
+                }
+            }
+
+            .heading {
+                font-size: 1.5rem;
+                padding: 8px 0;
+                border-bottom: 1px solid;
+                margin: 16px 0 8px !important;
+            }
+
+        }
+
+        .required {
+            color: $required-color;
+        }
+    }
+}
+
+.invalid-input-message {
+    margin-top: 4px;
+    color: var(--erad-base-color-red, #dc2d37);
+    font-size: 0.75em; /* consistent with ERAD validation messages */
+}
+
+:host ::ng-deep {
+
+    erad-text-input .erad-bordered-text-input,
+    erad-dropdown .erad-bordered-dropdown {
+        border-radius: 3px;
+    }
+    eui-icon[name="info"] {
+        position: relative !important;
+        left: 8px !important;
+        top: 4px !important;
+    }
+}

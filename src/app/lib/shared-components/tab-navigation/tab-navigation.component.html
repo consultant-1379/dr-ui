@@ -1,0 +1,33 @@
+<div class="tabs-navigation">
+  <div *ngIf="showAddSignIcon">
+    <erad-info-popup
+      id = "home-navigation-icon-id"
+      [ngClass]="[ disableAddSign ? 'disabled': '']"
+      [infoText]="'buttons.HOME_NAVIGATION_TOOLTIP' | translate">
+      <img
+        (click)="onAddSignClick()"
+        [src]="addSignIconPath"
+        alt="add-sign-icon"
+        class="add-sign-icon"
+        [attr.alt]="'buttons.HOME_NAVIGATION_TOOLTIP' | translate" />
+      </erad-info-popup>
+    </div>
+    <div class="tabs-arrow-panel">
+      <div class="tabs-navigation-space" ></div>
+      <div class="tabs-navigation-group">
+      <erad-tabs
+        [tabs]="tabs"
+        [selectedIndex]="selectedIndex"
+        (tabChange)="onTabChanged($event)"
+        (tabClose)="onTabClosed($event)"
+        (click)="onTabClicked($event)"
+      ></erad-tabs>
+    </div>
+    <div *ngIf="contextActions.length > 0">
+      <erad-action-list
+       [showEmptyMenu]="true"
+       [actions]="contextActions">
+      </erad-action-list>
+    </div>
+  </div>
+</div>

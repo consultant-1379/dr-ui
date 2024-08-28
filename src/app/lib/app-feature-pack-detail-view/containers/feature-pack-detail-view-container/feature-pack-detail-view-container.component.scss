@@ -1,0 +1,122 @@
+@import "~@erad/assets/styles/typography";
+@import "~@erad/assets/styles/colors";
+
+$app-item-detail-view-content-background-color: var(--feature-layout-background);
+
+
+// TODO eeicmsy my thoughts are that the plan was to add these "--app-xx" to theme.json
+// (similar to how feature-layout-background exists there)
+// So if get a concise list could update these when have in theme, now they default to base colors)
+
+$app-item-detail-view-header-title-color: var(--app-item-detail-view-header-title-color,
+        $base-color-black-08);
+
+$app-item-detail-view-header-subtitle-color: var(--app-item-detail-view-header-subtitle-color,
+        $base-color-dim-gray);
+
+$app-item-detail-view-left-panel-max-width: var(--app-item-detail-view-left-panel-max-width,
+        368px);
+
+:host ::ng-deep {
+
+    .content-main {
+        box-sizing: border-box;
+    }
+
+    erad-info-popup {
+        cursor: pointer;
+        &.disabled {
+            pointer-events: none;
+            cursor: none;
+        }
+    }
+
+    .fp-not-exists-message {
+        margin-top: 16px;
+        font-size: $text-regular;
+        color: $app-item-detail-view-header-subtitle-color;
+    }
+
+    .no-data-main-panel-message {
+        padding: 24px;
+        font-size: $text-regular;
+        color: $app-item-detail-view-header-subtitle-color;
+    }
+
+    erad-content-layout {
+        .content-layout-wrapper {
+            .content-wrapper {
+                overflow-y: auto !important;  // not scroll as default (shows in firefox)
+                height: auto !important;  // stops gray space at bottom of left panel when right Jobs panel grows
+                padding-left: 10px;
+                background-color: $app-item-detail-view-content-background-color;
+
+                &.left-border {
+                    min-height: 746px;
+                }
+
+                .icons {
+                    div:first-child{
+
+                        &.second-right-icons {
+                            width: auto;
+                        }
+                    }
+                }
+
+                &.right-border {
+                    @extend .left-border;
+                }
+
+                &.main {
+                    min-height: 746px;
+                }
+                .title {
+                    color: $app-item-detail-view-header-title-color;
+                }.sub-title {
+                    color: $app-item-detail-view-header-title-color;
+                }
+            }
+        }
+
+        // not calling when RBAC readOnly - as only have close icon not create job and close
+        .first-right-panel-icons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .content-wrapper:has(.content-right) {
+            max-width: $app-item-detail-view-left-panel-max-width;
+        }
+
+        .content-preview {
+            margin-top: 16px;
+        }
+
+        div[left-panel-icons] {
+            display: contents;
+        }
+    }
+}
+
+.main-wrapper {
+    padding: 10px 24px;
+}
+.feature-pack-detail-view-container{
+    margin: 0 2rem;  // same margins as job details and home screen (and tab navigation component)
+}
+
+.general-info-page-title {
+  position: relative;
+  right: 16px;
+}
+
+dnr-applications-card-view {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 0 16px;
+}

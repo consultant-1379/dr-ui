@@ -1,0 +1,8 @@
+<div class="copy-download">
+  <eui-tooltip [message]="'DOWNLOAD' | translate: { name: name }" name>
+    <eui-icon *ngIf="downloadUrl" name="download-save" [color]="iconColor" (click)="onDownLoadClick($event)"></eui-icon>
+  </eui-tooltip>
+  <eui-tooltip [message]="'COPY_TO_CLIPBOARD' | translate">
+    <eui-icon *ngIf="copyObject"name="copy" [color]="iconColor"(click)="onCopyClick($event)"></eui-icon>
+  </eui-tooltip>
+</div>

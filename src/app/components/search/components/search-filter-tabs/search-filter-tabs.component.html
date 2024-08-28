@@ -1,0 +1,16 @@
+<div class="search-filter-tabs">
+  <div class="sf-tabs-arrow-panel">
+    <div class="sf-tabs-navigation-group">
+      <span>
+        <erad-action-list *ngIf="tabs?.length > 0"
+          [actions]="contextActions"
+          (actionClicked) = "onActionClicked($event)">
+        </erad-action-list>
+        <erad-tabs
+          [tabs]="tabs"
+          (tabClose)="onTabClosed($event)"
+        ></erad-tabs>
+    </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.entity-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: -22px;
+
+    div {
+        padding: 0 8px;
+    }
+
+    img {
+        display: flex;
+        cursor: pointer;
+    }
+}

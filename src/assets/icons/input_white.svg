@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Dark_Theme" data-name="Dark Theme" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.1 16.1">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #f2f2f2;
+        stroke-linecap: square;
+        stroke-miterlimit: 1;
+      }
+    </style>
+  </defs>
+  <g id="Inputs">
+    <line class="cls-1" x1="2.55" y1="2.54" x2="2.55" y2="10.7"/>
+    <line class="cls-1" x1="2.65" y1="2.54" x2="13.55" y2="2.54"/>
+    <line class="cls-1" x1="13.55" y1="2.54" x2="13.55" y2="10.7"/>
+    <line class="cls-1" x1="2.55" y1="10.7" x2="3.83" y2="10.7"/>
+    <line class="cls-1" x1="12.19" y1="10.7" x2="13.48" y2="10.7"/>
+    <line class="cls-1" x1="6.38" y1="7.73" x2="8.28" y2="5.84"/>
+    <line class="cls-1" x1="8.31" y1="5.84" x2="10.21" y2="7.73"/>
+    <line class="cls-1" x1="8.26" y1="6.63" x2="8.26" y2="13.56"/>
+    <line class="cls-1" x1="4.47" y1="13.56" x2="8.03" y2="13.56"/>
+  </g>
+</svg>

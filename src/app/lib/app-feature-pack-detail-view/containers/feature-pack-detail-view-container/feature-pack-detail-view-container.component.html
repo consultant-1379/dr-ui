@@ -1,0 +1,177 @@
+<div
+  id="feature-pack-detail-view-container"
+  class="feature-pack-detail-view-container"
+>
+  <div content>
+      <erad-content-layout
+        class="fp-component__layout"
+        content
+        [isLeftPanelShown]="isLeftPanelShown"
+        [isMainContentPanelShown]="true"
+        [isFirstRightPanelShown]="isRightPanelShown"
+        [isSecondRightPanelShown]="isSecondRightPanelShown">
+        <div left-panel-title>
+          {{ "FEATURE_PACKS" | translate }}
+        </div>
+        <div left-panel-sub-title *ngIf="featurePackInfoId; else fpNotExistsMessage">
+          {{ 'ID_UPPER_CASE' | translate }} - {{ featurePackInfoId }}
+        </div>
+        <ng-template #fpNotExistsMessage>
+          <div class="fp-not-exists-message" *ngIf="!isFeaturePackDetailsLoading">
+            {{ 'messages.FEATURE_PACK_NOT_FOUND_TO_DISPLAY_DETAILS_MESSAGE' | translate }}
+          </div>
+        </ng-template>
+        <div left-panel-icons>
+          <erad-action-list
+            [actions]="[]"
+          ></erad-action-list>
+          <eds-icon
+            class="icon"
+            icon="cross"
+            role="button"
+            (click)="onCloseEntityDetailButtonClicked()"
+            eradKeyboardSupport
+            (enterPressed)="onCloseEntityDetailButtonClicked()"
+          >
+          </eds-icon>
+        </div>
+        <div class="content-preview" left-panel-content>
+            <!-- information details used for left panel flyout (FP details panel)
+                of feature pack details page -->
+          <dnr-item-information-details
+            *ngIf="isLeftPanelShown && featurePackInfoId"
+            [copyObject]="featurePackInfo"
+            [itemName]="featurePackInfo?.name"
+            [downloadURL]="downloadURL"
+            [selectableItems]="featurePackDetailsConfig.selectableItems"
+            [highlightAccordionHeaders]="true"
+            (accordionHeaderClick)="onAccordionHeaderClicked($event)"
+            >
+            <dnr-general-information-main-panel
+              GENERAL_INFORMATION
+              [informationItems]="generalFeaturePackInfo">
+            </dnr-general-information-main-panel>
+            <ng-container
+              *ngFor="let application of featurePackInfo?.applications"
+              APPLICATIONS>
+              <dnr-application-information-details
+                [showOutline]="true"
+                [applicationName]="application.name"
+                [applicationId]="application.id"
+                [selectedApplicationId]="selectedApplicationId"
+                [applicationDescription]="application.description"
+                (applicationCardSelect)="onApplicationCardSelected($event)"
+              >
+              </dnr-application-information-details>
+            </ng-container>
+          </dnr-item-information-details>
+        </div>
+
+        <!-- Main Panel -->
+        <div main-panel-title *ngIf="featurePackInfoId; else noDataMainPanelMessage">
+          <div class="main-wrapper dnr-info-heading general-info-page-title">
+            <span>{{ ('itemInformationDetails.' + accordion) | translate }}</span>
+          </div>
+        </div>
+
+        <ng-template #noDataMainPanelMessage>
+          <div class="no-data-main-panel-message">
+            {{ 'messages.NOT_FOUND_ERROR' | translate }}
+          </div>
+        </ng-template>
+
+        <ng-container main-panel-icons>
+        </ng-container>
+        <div main-panel-content class="content-main" *ngIf="featurePackInfoId">
+          <dnr-general-information-main-panel
+            *ngIf="accordion === 'GENERAL_INFORMATION'"
+            [informationItems]="generalFeaturePackInfo"
+          ></dnr-general-information-main-panel>
+          <dnr-applications-card-view
+            *ngIf="accordion === 'APPLICATIONS'"
+            [applications]="featurePackInfo?.applications"
+            [selectedApplicationId]="selectedApplicationId"
+            (applicationCardSelected)="onApplicationCardSelected($event)"
+          ></dnr-applications-card-view>
+        </div>
+
+          <!-- First right panel -->
+          <div
+            *ngIf="isRightPanelShown"
+            first-right-panel-title>
+            <span>{{ "JOBS" | translate }}</span>
+          </div>
+          <div first-right-panel-icons [ngClass]= "[ hasRbacWriteAccess ? 'first-right-panel-icons': '']">
+            <erad-info-popup *ngIf = "hasRbacWriteAccess"
+              [ngClass]="[ showCreateJobForm ? 'disabled': '']"
+              [infoText]="'buttons.CREATE_JOB_TOOLTIP' | translate"
+              id="create-job-icon-button-id">
+              <img
+              (click)="onCreateJobFromPanelAction()"
+              [src]="showCreateJobForm ? createJobIconPathActive : createJobIconPath"
+              [attr.alt]="'buttons.CREATE_JOB_TOOLTIP' | translate" />
+            </erad-info-popup>
+            <eds-icon
+              class="icon detail-panel-close-button"
+              icon="cross"
+              role="button"
+              (click)="onCloseFirstRightPanel()"
+              eradKeyboardSupport
+              (enterPressed)="onCloseFirstRightPanel()"
+            >
+            </eds-icon>
+          </div>
+        <div first-right-panel-content>
+          <div *ngIf="isRightPanelShown">
+            <dnr-jobs-list-column-view
+                [showJobDefinitionFilter]="true"
+                [featurePackId]="featurePackInfoId"
+                [applicationId]="selectedApplicationId"
+                (jobSelection)="onJobSelectionFromJobsList($event)">
+            </dnr-jobs-list-column-view>
+          </div>
+        </div>
+
+        <!-- Second right panel -->
+        <div
+        *ngIf="isSecondRightPanelShown"
+        second-right-panel-title>
+        <span *ngIf="showCreateJobForm">{{ "createJob.TITLE" | translate }}</span>
+        <span *ngIf="!showCreateJobForm">{{ "navigation.JOB_DETAILS" | translate }}</span>
+      </div>
+      <div
+        *ngIf="isSecondRightPanelShown"
+        second-right-panel-sub-title
+        >
+        <span *ngIf="showCreateJobForm">{{ "createJob.SUBTITLE" | translate }}</span>
+        <span *ngIf="!showCreateJobForm">{{ job.id }}</span>
+      </div>
+      <div second-right-panel-icons class="second-right-icons">
+        <eds-icon
+          class="icon detail-panel-close-button"
+          icon="cross"
+          role="button"
+          (click)="onCloseSecondRightPanel()"
+          eradKeyboardSupport
+          (enterPressed)="onCloseSecondRightPanel()"
+        >
+        </eds-icon>
+      </div>
+      <div second-right-panel-content>
+        <div *ngIf="isSecondRightPanelShown" class="content-preview">
+          <dnr-create-job-information-form
+            *ngIf="showCreateJobForm"
+            [preSelectedFeaturePackId]= "featurePackInfo?.id"
+            [preSelectedApplicationId]= "application?.id">
+          </dnr-create-job-information-form>
+          <!-- information details used for 2nd right panel flyout (Job details panel)
+                of feature pack details page -->
+          <dnr-job-details-column-container
+            *ngIf="job && !showCreateJobForm"
+            [jobId]="job.id"
+          ></dnr-job-details-column-container>
+        </div>
+      </div>
+      </erad-content-layout>
+  </div>
+</div>

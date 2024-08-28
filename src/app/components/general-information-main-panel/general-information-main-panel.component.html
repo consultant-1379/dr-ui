@@ -1,0 +1,39 @@
+<div class="general-information-main-panel">
+  <div class="general-information" *ngFor="let informationItem of informationItems">
+    <div class="general-info-box" *ngIf="!!informationItem.label">
+      <p class="small">{{ informationItem.label }}</p>
+      <div class="item-value">
+
+        <span *ngIf="!!informationItem.hyperlink then hyperlinkLabel"></span>
+
+        <span *ngIf="!!informationItem.componentSelectorName then insertComponent"></span>
+
+        <span *ngIf="!informationItem.componentSelectorName && !informationItem.hyperlink then simpleLabel"></span>
+
+        <ng-template #hyperlinkLabel>
+          <span class="medium hyperlink" (click)="onClickHandler(informationItem)">{{ formatValue(informationItem) }}</span>
+        </ng-template>
+
+        <ng-template #insertComponent>
+          <ng-container [ngSwitch]="informationItem.componentSelectorName">
+            <span *ngSwitchCase="'dnr-enable-switch'" dnr-enable-switch
+              [value]= "informationItem.value === 'true'"
+              (switchChange) ="onComponentEvent($event, informationItem)"
+            ></span>
+            <span *ngSwitchDefault>Unknown directive: {{ informationItem.componentSelectorName }}</span>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #simpleLabel>
+          <span *ngIf="!shouldBeBoldCssClass(informationItem)" class="medium">{{ formatValue(informationItem) }}</span>
+          <span *ngIf="shouldBeBoldCssClass(informationItem)" class="medium bold">{{ formatValue(informationItem) }}</span>
+        </ng-template>
+
+        <erad-info-popup *ngIf="!!informationItem.tooltip" [infoText]="informationItem.tooltip">
+            <eui-icon class="tooltip-icon" name="info-solid"></eui-icon>
+        </erad-info-popup>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,187 @@
+<erad-content-layout
+  id="entity-list-view-component"
+  class="entity-list-view-component"
+  [isLeftPanelShown]="isLeftMenuShown"
+  [isMainContentPanelShown]="true"
+  [isFirstRightPanelShown]="isFirstRightPanelShown"
+  [isSecondRightPanelShown]="isSecondPanelShown"
+  [isThirdRightPanelShown]="isThirdRightPanelShown"
+>
+  <div left-panel-content>
+    <dnr-main-menu-left-panel
+      (closeButtonClicked)="onMainMenuLeftPanelCloseButtonClicked()"
+      [selected]="FeaturePack"
+    ></dnr-main-menu-left-panel>
+  </div>
+  <!-- Main Panel -->
+  <ng-container main-panel-title>
+    <div class="header">
+      <eds-icon
+        class="expand-button"
+        icon="search"
+        role="button"
+        (click)="onExpandMainMenuLeftPanelButtonClicked()"
+        eradKeyboardSupport
+        (enterPressed)="onExpandMainMenuLeftPanelButtonClicked()"
+      >
+      </eds-icon>
+      <div class="divider"></div>
+      <span class="title">{{ 'navigation.initials.FP' | translate }}</span>
+      <span class="subtitle">{{ 'navigation.FEATURE_PACKS' | translate }}</span>
+    </div>
+  </ng-container>
+  <ng-container main-panel-icons>
+    <dnr-app-item-actions
+        [contextActions]="fpTableConfig.contextActions"
+        [iconButtonActions]="fpTableConfig.iconButtonActions"
+        [isActionForAdminOnly]= "true"
+  ></dnr-app-item-actions>
+  </ng-container>
+
+  <div main-panel-content class="content-main">
+    <dnr-app-item-table-view
+      [forceReload]="forceReloadTable"
+      [actionItems]="fpTableConfig.actionItems"
+      [filter]="filter"
+      [defaultSort]="'-createdAt'"
+      [entity]="FeaturePack"
+      [searchFieldPlaceholder]="fpTableConfig.searchPlaceholder | translate"
+      [searchFields]="searchFieldsConfig"
+      [appItemsFacadeService]="fpTableConfig.facadeService"
+      [appItemDetailFacadeService]="fpTableConfig.facadeDetailService"
+      (tableActionClick)="onTableActionClick($event)"
+      (selectionChanged)="onFpSelectionChanged($event)"
+      (searchFilterChanged)="onSearchFilterChanged()"
+      #table
+    ></dnr-app-item-table-view>
+  </div>
+
+  <!-- right panel (feature pack details)-->
+  <div first-right-panel-title>
+    <span>{{ "navigation.FEATURE_PACK_DETAILS" | translate }}</span>
+  </div>
+  <div first-right-panel-sub-title>
+    <span>{{ 'ID_UPPER_CASE' | translate }} - {{ selectedFp?.id || '' }}</span>
+  </div>
+
+  <div first-right-panel-icons>
+    <erad-action-list
+      [actions]="[]"
+    ></erad-action-list>
+    <eds-icon
+      class="icon"
+      icon="cross"
+      role="button"
+      (click)="onCloseFirstRightSidePanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseFirstRightSidePanel()"
+    >
+    </eds-icon>
+  </div>
+  <div class="content-preview" first-right-panel-content>
+    <dnr-item-information-details
+      *ngIf="isFirstRightPanelShown"
+      [copyObject]="selectedFp"
+      [itemName]="downloadFpName"
+      [downloadURL]="downloadFpURL"
+      [selectableItems]="fpDetailsConfig.selectableItems"
+      (linkAwayClick)="onLinkAwayToFeaturePackDetails($event)"
+    >
+      <dnr-general-information-main-panel
+        GENERAL_INFORMATION
+        *ngIf="selectedFp"
+        [informationItems]="selectedFpGeneralInfo">
+      </dnr-general-information-main-panel>
+      <ng-container *ngIf="selectedFp['applications']" APPLICATIONS>
+          <ng-container *ngFor="let application of selectedFp['applications']">
+            <dnr-application-information-details
+              [showOutline]="true"
+              [applicationName]="application.name"
+              [applicationId]="application.id"
+              [selectedApplicationId]="!!selectedApplication?.id ? selectedApplication?.id : ''"
+              [applicationDescription]="application?.description"
+              (applicationCardSelect)="onApplicationSelection($event)"
+            >
+            </dnr-application-information-details>
+        </ng-container>
+      </ng-container>
+
+    </dnr-item-information-details>
+  </div>
+
+  <!--Second Right Panel Area (Job list for selected Application)-->
+  <div
+    *ngIf="isSecondPanelShown"
+    second-right-panel-title
+    class="border-line">{{ "JOBS" | translate }}
+  </div>
+  <div second-right-panel-icons [ngClass]= "[ hasRbacWriteAccess ? 'second-right-panel-icons': '']">
+    <erad-info-popup *ngIf = "hasRbacWriteAccess"
+      [ngClass]="[ isCreateJobShown ? 'disabled': '']"
+      [infoText]="'buttons.CREATE_JOB_TOOLTIP' | translate"
+      id="create-job-icon-button-id">
+      <img
+      (click)="onCreateJobClickedHandler()"
+      [src]="isCreateJobShown ? createJobIconPathActive : createJobIconPath"
+      [attr.alt]="'buttons.CREATE_JOB_TOOLTIP' | translate" />
+    </erad-info-popup>
+    <eds-icon
+      class="icon detail-panel-close-button"
+      icon="cross"
+      role="button"
+      (click)="onCloseSecondRightPanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseSecondRightPanel()"
+    >
+    </eds-icon>
+  </div>
+  <div second-right-panel-content class="content-preview withoutSubTitle">
+    <div *ngIf="isSecondPanelShown && selectedApplication">
+      <dnr-jobs-list-column-view
+        [showJobDefinitionFilter]="true"
+        [featurePackId]="selectedFp.id"
+        [applicationId]="selectedApplication.id"
+        (jobSelection)="onJobSelectionFromJobsList($event)">
+      </dnr-jobs-list-column-view>
+    </div>
+  </div>
+
+  <!--Third Right Panel Area (job details or create job) -->
+  <div
+    *ngIf="isThirdRightPanelShown"
+    third-right-panel-title>
+    <span *ngIf="isCreateJobShown">{{ "createJob.TITLE" | translate }}</span>
+    <span *ngIf="!isCreateJobShown">{{ "navigation.JOB_DETAILS" | translate }}</span>
+  </div>
+  <div
+    *ngIf="isThirdRightPanelShown"
+    third-right-panel-sub-title
+    >
+    <span *ngIf="isCreateJobShown">{{ "createJob.SUBTITLE" | translate }}</span>
+    <span *ngIf="!isCreateJobShown">{{ selectedJob.id }}</span>
+  </div>
+  <div third-right-panel-icons>
+    <eds-icon
+      class="icon detail-panel-close-button"
+      icon="cross"
+      role="button"
+      (click)="onCloseThirdRightPanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseThirdRightPanel()"
+    >
+    </eds-icon>
+  </div>
+  <div third-right-panel-content>
+    <div *ngIf="isThirdRightPanelShown" class="content-preview">
+      <dnr-create-job-information-form
+        *ngIf="isCreateJobShown"
+        [preSelectedFeaturePackId]= "selectedFp?.id"
+        [preSelectedApplicationId]= "selectedApplication?.id">
+      </dnr-create-job-information-form>
+      <dnr-job-details-column-container
+        *ngIf="selectedJob && !isCreateJobShown"
+        [jobId]="selectedJob.id"
+      ></dnr-job-details-column-container>
+    </div>
+  </div>
+</erad-content-layout>

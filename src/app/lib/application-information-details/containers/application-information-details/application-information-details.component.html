@@ -1,0 +1,32 @@
+<div id="dnr-application-information-details"
+  [class.with-outline]="!showOutline"
+  [class.selected]="selectedApplicationId===applicationId">
+  <div>
+    <div class="loader-wrapper" *ngIf="isLoading">
+      <erad-loader-animation></erad-loader-animation>
+    </div>
+    <ng-container *ngIf="!isLoading">
+      <div class="general-information" (click)="onActionHandler()">
+        <div class="description flex">
+          <div class="value-text">
+            {{ applicationName }}
+          </div>
+          <eds-icon icon="arrow-right" class="application-icon"></eds-icon>
+        </div>
+        <div class="description">
+          <div class="label-text">
+            {{ "job.APPLICATION_ID" | translate }}
+          </div>
+          <span class="value-text">{{ applicationId }}
+          </span>
+        </div>
+        <div class="description" *ngIf="applicationDescription">
+          <div class="label-text">
+            {{ "job.DESCRIPTION" | translate }}
+          </div>
+          <span class="value-text">{{ applicationDescription }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>

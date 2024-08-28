@@ -1,0 +1,35 @@
+<div main-panel-content>
+  <div *ngIf="waitingForResponse || appLoading || objectsLoading; then pleaseWait; else objectsTable"></div>
+
+  <ng-template #pleaseWait>
+    <dnr-info-message
+    [showTopIcon]="true"
+    [title]="'INFORMATION'"
+    [message]="'PLEASE_WAIT_MESSAGE'"
+    ></dnr-info-message>
+  </ng-template>
+
+  <ng-template #objectsTable>
+    <div class="discovered-objects-table">
+      <dnr-table
+      [failure]="failure"
+      [data]="discoveredObjects"
+      [displayRows]="displayRows"
+      [columnsConfig]="columnsConfig"
+      [actionItems]="actionItems"
+      [actions]="getMenuItems"
+      [selectionType]="selectionType"
+      [selectedItems]="selectedItems"
+      [tablePaginationParams]="tablePaginationParams"
+      [queryParams]="pageQueryParams"
+      (actionClicked)="onMenuClicked($event)"
+      (refreshClicked)="onRefreshClicked()"
+      (sortChanged)="onSortChanged($event)"
+      (clearClicked)="clearSelection()"
+      (pageChanged)="onPageChanged($event)"
+      (configChanged)="onConfigChanged($event)"
+      (selectionChanged)="onSelectionChanged($event)"
+      ></dnr-table>
+    </div>
+  </ng-template>
+</div>

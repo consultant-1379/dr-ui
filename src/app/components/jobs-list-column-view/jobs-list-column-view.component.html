@@ -1,0 +1,54 @@
+<div class="jobs-list-column-view jobs-apps">
+
+  <div *ngIf="showJobDefinitionFilter && (applicationJobName || jobs.length)">
+    <dnr-job-definition-dropdown
+      [isFilter]="true"
+      [featurePackId]="featurePackId"
+      [applicationId]="applicationId"
+      (filterChange)="onFilterChange($event)">
+    </dnr-job-definition-dropdown>
+  </div>
+
+  <div *ngIf="failure || loading; then showNoJobs; else showJobs"></div>
+
+  <ng-template #showNoJobs>
+    <div *ngIf="!loading && failure" class="jobs-list-column-view  jobs-apps-inline-error">
+      <dnr-failure-display
+        [failure]="failure">
+      </dnr-failure-display>
+    </div>
+
+    <erad-loader-animation class="loader-wrapper" *ngIf="loading && !failure"></erad-loader-animation>
+  </ng-template>
+
+  <ng-template #showJobs>
+    <ul class="jobs-apps-list" *ngIf="jobs.length > 0">
+      <ng-container *ngFor="let job of jobs">
+        <li class="jobs-apps-list-item" (click)="onJobSelection(job)">
+          <div class="content" [ngClass]="{ 'selected': selectedJob?.id===job?.id }">
+            <div class="list-group">
+              <div class="list-group-area">
+                <div class="job-name">{{job.name}}</div>
+                <div class="job-id">{{job.id}}</div>
+              </div>
+              <div class="list-group-area">
+                <div class="start-date-label">{{'job.START_DATE' | translate}}</div>
+                <div class="start-date">{{formatDateValue(job.startDate)}}</div>
+              </div>
+            </div>
+            <eui-icon name="arrow-right"></eui-icon>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+
+    <span *ngIf="jobs.length === 0">
+      <dnr-info-message *ngIf="jobScheduleId" [message]="'schedule.EMPTY_MESSAGE_NO_JOBS_FOR_SCHEDULE_ID'">
+      </dnr-info-message>
+      <dnr-info-message *ngIf="applicationJobName" [message]="'job.EMPTY_MESSAGE_DUE_TO_CURRENT_JOB_DEFINITION_FILTER_SELECTION'">
+      </dnr-info-message>
+      <dnr-info-message *ngIf="!applicationJobName && !jobScheduleId" [message]="'job.NO_JOB_SPECIFICATIONS'">
+      </dnr-info-message>
+    </span>
+  </ng-template>
+</div>

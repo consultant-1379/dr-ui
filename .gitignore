@@ -1,0 +1,75 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/documenttaion
+/docs
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# node external packages
+/nodejs/extract
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+
+# IDEs and editors
+dr-ui.iml
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.code-workspace
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+package-lock.json
+
+# System Files
+.DS_Store
+Thumbs.db
+
+###
+### BOB / CI
+###
+/.bob*
+artifact.properties
+
+## sonar
+.scannerwork
+.scannerwork/.sonar_lock
+.scannerwork/report-task.txt
+.scannerwork/*
+reports/*
+
+# playwright
+tests/node_modules
+tests/test-results/
+tests/playwright-report/
+tests/blob-report/
+tests/screenshots/
+tests/playwright/.cache/
+TESTS-Chrome*

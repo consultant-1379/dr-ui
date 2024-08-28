@@ -1,0 +1,21 @@
+<div class="entity-container"
+    *ngIf="iconButtonActions?.length && userHasAccess()">
+    <div class="app-item-actions"
+        eradKeyboardSupport
+        role="button"
+        *ngFor="let iconButtonAction of iconButtonActions">
+        <erad-info-popup
+            id = {{iconButtonAction.id}}
+            [ngClass]="[ iconButtonAction?.disabled ? 'disabled': '']"
+            [infoText]="iconButtonAction?.tooltip | translate">
+            <img
+                (click)="iconButtonAction.actionHandler($event)"
+                [src]="iconButtonAction?.iconPath"
+                [attr.alt]="iconButtonAction.name | translate" />
+        </erad-info-popup>
+    </div>
+    <erad-action-list
+        [actions]="contextActions"
+        (actionClicked)="onActionsClicked($event)">
+    </erad-action-list>
+</div>

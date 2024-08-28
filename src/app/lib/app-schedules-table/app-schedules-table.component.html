@@ -1,0 +1,132 @@
+<erad-content-layout
+  id="entity-list-view-component"
+  class="entity-list-view-component"
+  [isLeftPanelShown]="isLeftMenuShown"
+  [isMainContentPanelShown]="true"
+  [isFirstRightPanelShown]="isFirstRightPanelShown"
+  [isSecondRightPanelShown]="isSecondRightPanelShown"
+>
+  <div left-panel-content>
+    <dnr-main-menu-left-panel
+      (closeButtonClicked)="onMainMenuLeftPanelCloseButtonClicked()"
+      [selected]="Schedules"
+    ></dnr-main-menu-left-panel>
+  </div>
+
+  <!-- Main Panel (containing table and action buttons) -->
+  <ng-container main-panel-title>
+    <div class="header">
+      <eds-icon
+        class="expand-button"
+        icon="search"
+        role="button"
+        (click)="onExpandMainMenuLeftPanelButtonClicked()"
+        eradKeyboardSupport
+        (enterPressed)="onExpandMainMenuLeftPanelButtonClicked()"
+      >
+      </eds-icon>
+      <div class="divider"></div>
+      <span class="title">{{ 'navigation.initials.S' | translate }}</span>
+      <span class="subtitle">{{ 'navigation.SCHEDULES' | translate }}</span>
+    </div>
+  </ng-container>
+  <ng-container main-panel-icons>
+    <dnr-app-item-actions
+        [contextActions]="schedulesTableConfig?.contextActions"
+        [iconButtonActions]="schedulesTableConfig?.iconButtonActions"
+  ></dnr-app-item-actions>
+  </ng-container>
+
+  <div main-panel-content class="content-main">
+    <dnr-app-item-table-view
+      [forceReload]="forceReloadTable"
+      [actionItems]="schedulesTableConfig?.actionItems"
+      [filter]="filter"
+      [defaultSort]="'-createdAt'"
+      [entity]="Schedules"
+      [searchFieldPlaceholder]="schedulesTableConfig?.searchPlaceholder | translate"
+      [searchFields]="searchFieldsConfig"
+      [appItemsFacadeService]="schedulesTableConfig?.facadeService"
+      [appItemDetailFacadeService]="schedulesTableConfig?.facadeDetailService"
+      (tableActionClick)="onTableActionClick($event)"
+      (selectionChanged)="onSelectionChanged($event)"
+      (searchFilterChanged)="onSearchFilterChanged()"
+      #table
+    ></dnr-app-item-table-view>
+  </div>
+
+  <!-- right panel (schedule details or create schedule)-->
+  <div first-right-panel-title>
+    <span>{{ rightPanelTitle }} </span>
+  </div>
+  <div *ngIf="!isCreateScheduleShown" first-right-panel-sub-title>
+    <span>{{ rightPanelSubTitle }}</span>
+  </div>
+
+  <div first-right-panel-icons>
+    <erad-action-list
+      [actions]="[]"
+    ></erad-action-list>
+    <eds-icon
+      class="icon"
+      icon="cross"
+      role="button"
+      (click)="onCloseFirstRightSidePanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseFirstRightSidePanel()"
+    >
+    </eds-icon>
+  </div>
+
+  <div class="content-preview" first-right-panel-content>
+
+    <!-- position sub-title when text so take 100% of available width
+         (sub title id's on their own are not split with a border - and use general info top border)-->
+    <div first-right-panel-sub-title *ngIf="isCreateScheduleShown" class='top-bordered-sub-title'>
+      <span>{{ rightPanelSubTitle }}</span>
+    </div>
+    <dnr-create-schedule-form *ngIf="isFirstRightPanelShown && isCreateScheduleShown"
+      (cancelClicked)="onCancelSchedule()"
+      (createScheduleSuccess)="onCreateScheduleSuccess()">
+    </dnr-create-schedule-form>
+
+    <dnr-schedule-details-column-container
+      *ngIf="selectedSchedule && !isCreateScheduleShown"
+      [scheduleId]="selectedSchedule.id"
+      (jobSelection)="onJobSelection($event)"
+      (scheduleUpdated)="onScheduleUpdated()"
+    >
+    </dnr-schedule-details-column-container>
+  </div>
+
+  <!-- Second Right Panel Area (job details - on job selection from 'Recent executions') -->
+  <div
+    *ngIf="isSecondRightPanelShown"
+    second-right-panel-title>
+    <span>{{ "navigation.JOB_DETAILS" | translate }}</span>
+  </div>
+  <div
+    *ngIf="isSecondRightPanelShown"
+    second-right-panel-sub-title
+    >
+    <span>{{ selectedJob.id }}</span>
+  </div>
+  <div second-right-panel-icons>
+    <eds-icon
+      class="icon detail-panel-close-button"
+      icon="cross"
+      role="button"
+      (click)="onCloseSecondRightPanel()"
+      eradKeyboardSupport
+      (enterPressed)="onCloseSecondRightPanel()"
+    >
+    </eds-icon>
+  </div>
+  <div second-right-panel-content>
+    <div *ngIf="isSecondRightPanelShown" class="content-preview">
+      <dnr-job-details-column-container
+        [jobId]="selectedJob.id"
+      ></dnr-job-details-column-container>
+    </div>
+  </div>
+</erad-content-layout>

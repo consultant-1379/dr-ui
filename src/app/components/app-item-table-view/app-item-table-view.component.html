@@ -1,0 +1,56 @@
+<div class="entity-table-view-container">
+  <div *ngIf="loading; then pleaseWait; else showTableWithSearch"></div>
+
+  <ng-template #pleaseWait>
+    <dnr-info-message
+      [showTopIcon]="true"
+      [title]="'INFORMATION'"
+      [message]="'PLEASE_WAIT_MESSAGE'"
+    ></dnr-info-message>
+  </ng-template>
+
+  <ng-template #emptyFilterResult>
+    <dnr-info-message
+        [title]="'NO_MATCHING_RECORDS_FOUND'"
+        [titleIconName]="'search'"
+        [titleIconSize]="'38px'"
+        [message]="'TRY_MODIFYING_YOUR_SEARCH_CRITERIA'">
+    </dnr-info-message>
+  </ng-template>
+
+  <ng-template #showTableWithSearch>
+    <div>   <!-- show in all cases - e.g. search filter could be causing failure and would use searchbar to undo -->
+      <dnr-search
+        [searchFields]="searchFields"
+        [placeholder]="searchFieldPlaceholder"
+        [filter]="filter"
+        (searchFilterChanged)="onSearchFilterChanged($event)"
+      ></dnr-search>
+
+      <ng-template *ngIf="isEmptyFilterResult; then emptyFilterResult"></ng-template>
+    </div>
+
+    <dnr-table
+      [failure]="failure"
+      [data]="items"
+      [displayRows]="displayRows"
+      [emptyTableMessage]="emptyTableMessage"
+      [columnsConfig]="columnsConfig"
+      [actions]="tableActions"
+      [actionItems]="actionItemToggler ? actionItems : []"
+      [selectionType]="selectionType"
+      [selectedItems]="selectedItems"
+      [tablePaginationParams]="tablePaginationParams"
+      [queryParams]="pageQueryParams"
+      [localStorageKey]="localStorageKey"
+      (actionClicked)="onActionClicked($event)"
+      (refreshClicked)="reloadTableItems()"
+      (reloadTableOnFail)="onReloadTableOnFail()"
+      (clearClicked)="clearSelection()"
+      (sortChanged)="onSortChanged($event)"
+      (pageChanged)="onPageChanged($event)"
+      (configChanged)="onConfigChanged($event)"
+      (selectionChanged)="onSelectionChanged($event)"
+    ></dnr-table>
+  </ng-template>
+</div>

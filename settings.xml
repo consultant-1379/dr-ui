@@ -1,0 +1,52 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <interactiveMode>true</interactiveMode>
+    <usePluginRegistry>false</usePluginRegistry>
+    <offline>false</offline>
+
+    <proxies>
+        <proxy>
+            <id>proxy</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>www-proxy.ericsson.se</host>
+            <port>8080</port>
+            <nonProxyHosts>*.ericsson.se|*.ericsson.com|localhost|10.210.174.189|127.0.0.1</nonProxyHosts>
+        </proxy>
+    </proxies>
+
+    <mirrors>
+        <mirror>
+            <id>armseli-repo1</id>
+            <name>Maven Central mirror</name>
+            <url>https://arm.seli.gic.ericsson.se/artifactory/proj-esoa-dr-snapshots</url>
+            <mirrorOf>central</mirrorOf>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>dnr</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>armseli-proj-dnr</id>
+                    <name>armseli-proj-dnr</name>
+                    <url>https://arm.seli.gic.ericsson.se/artifactory/proj-esoa-dr-snapshots</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>armseli-proj-dnr</id>
+                    <name>armseli-proj-dnr</name>
+                    <url>https://arm.seli.gic.ericsson.se/artifactory/proj-esoa-dr-snapshots</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+</settings>
+
